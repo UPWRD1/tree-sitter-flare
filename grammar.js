@@ -1,5 +1,5 @@
 module.exports = grammar({
-  name: 'your_language',
+  name: 'flare',
 
   extras: $ => [
     /\s/,
