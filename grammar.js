@@ -9,10 +9,10 @@ module.exports = grammar({
   conflicts: $ => [
     // [$.expression, $.constructor, $.fielded_constructor],
     [$.constructor, $.fielded_constructor],
-    [$.user_type, $.pattern_variant],
+    // [$.user_type, $.pattern_variant],
     [$.pattern_variant, $.pattern_atom],
-    [$.tuple_type, $.pattern_tuple],
-    [$.tuple_type, $.pattern_atom],
+    // [$.tuple_type, $.pattern_tuple],
+    // [$.tuple_type, $.pattern_atom],
   ],
 
   rules: {
@@ -38,14 +38,14 @@ module.exports = grammar({
       $.import_statement
     ),
 
-    let_declaration: $ => seq(
+    let_declaration: $ => prec(1, seq(
       'let',
       field('name', $.identifier),
       repeat(field('parameter', $.identifier)),
       optional(seq(':', field('type', $.type))),
       '=',
       field('body', $.expression)
-    ),
+    )),
 
     struct_definition: $ => seq(
       'struct',
@@ -103,25 +103,25 @@ module.exports = grammar({
       'unit'
     ),
 
-    user_type: $ => seq(
+    user_type: $ => prec(1, seq(
       $.path,
       optional(seq(
         '[',
         commaSep($.type),
         ']'
       ))
-    ),
+    )),
 
     generic_type: $ => seq(
       '?',
       $.identifier
     ),
 
-    tuple_type: $ => seq(
+    tuple_type: $ => prec(1, seq(
       '{',
       commaSep($.type),
       '}'
-    ),
+    )),
 
     arrow_type: $ => prec.right(9, seq(
       field('parameter', $.type),
@@ -134,18 +134,19 @@ module.exports = grammar({
       $.string,
       $.boolean,
       $.tuple,
-      $.let_expression,
       $.if_expression,
       $.match_expression,
       $.lambda,
       $.parenthesized_expression,
+      // $.let_expression,
       $.constructor,
       $.fielded_constructor,
       $.binary_expression,
       $.call_expression,
       $.field_access,
       $.path,
-      $.identifier
+      $.identifier,
+      $.let_expression,
     ),
 
     number: $ => /\d+(\.\d+)?/,
@@ -171,7 +172,7 @@ module.exports = grammar({
       '}'
     )),
 
-    let_expression: $ => prec.right(2, seq(
+    let_expression: $ => prec.right(seq(
       'let',
       field('pattern', $.pattern),
       '=',
