@@ -52,12 +52,12 @@ module.exports = grammar({
       field('body', $.expression)
     )),
 
-    struct_definition: $ => seq(
+    struct_definition: $ => prec(10, seq(
       'struct',
-      field('name', $.type),
+      field('name', $.user_type),
       '=',
       commaSep($.struct_field)
-    ),
+    )),
 
     struct_field: $ => seq(
       field('name', $.identifier),
@@ -108,14 +108,14 @@ module.exports = grammar({
       'unit'
     ),
 
-    user_type: $ => seq(
-      $.path,
+    user_type: $ => prec(6, seq(
+      choice($.path, $.identifier),
       optional(seq(
         '[',
         commaSep($.type),
         ']'
       ))
-    ),
+    )),
 
     generic_type: $ => seq(
       '?',
@@ -165,8 +165,8 @@ module.exports = grammar({
 
     boolean: $ => choice('true', 'false'),
 
-    identifier: $ => /[a-zA-Z_][a-zA-Z0-9_]*/,
-
+    identifier: $ => new RustRegex('(?i)[a-z_][a-z0-9_]*'),
+    
     path: $ => prec.left(10, seq(
       $.identifier,
       repeat1(seq('.', $.identifier))
