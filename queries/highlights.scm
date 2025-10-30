@@ -87,14 +87,13 @@
 (user_type
   (identifier) @type)
 
-(generic_type
-  (identifier) @type.parameter)
+(generic_type) @type
 
 (arrow_type) @type
 
 ; Struct definitions
-; (struct_definition
-  ; name: (type) @type )
+(struct_definition
+  name: (user_type) @type )
 
 (struct_field
   name: (identifier) @property)
