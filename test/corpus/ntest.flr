@@ -1,0 +1,33 @@
+package Main = 
+    use Math.factorial
+    # use Option.Option
+    # use Option.unwrap
+    #use Opt.Option
+    #use Opt.unwrap
+    #use Opt.unwrap_or
+    use Option
+
+   # extern println: str -> unit
+
+    #extern concat: str -> str -> str
+    extern format: ?T -> str
+    #extern exit: num -> unit
+
+    #struct S =
+    #    d: str,
+    #    f: str -> num -> str
+
+    let id x : ?T -> ?T =
+        x
+    
+    let main = 
+         let a = Option.Some {{1, 2}} in
+         #   id a
+
+        let b = Option.Some {3} in
+           (unwrap a) * (unwrap b)
+
+        # let i = S {d = "asdf", f = fn x y => concat x (display_num y)} in
+        #    let en = Option.Some {"asdf"} in
+        #         let f = factorial (unwrap en) in
+        #                i.f i.d (f)

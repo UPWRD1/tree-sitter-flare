@@ -9,7 +9,10 @@ module.exports = grammar({
   conflicts: $ => [
     // [$.expression, $.constructor, $.fielded_constructor],
     [$.constructor, $.fielded_constructor],
+    [$.user_type, $.pattern_variant],
     [$.pattern_variant, $.pattern_atom],
+    [$.tuple_type, $.pattern_tuple],
+    [$.tuple_type, $.pattern_atom],
   ],
 
   rules: {
@@ -22,8 +25,8 @@ module.exports = grammar({
       $.identifier,
       '=',
       choice(
-        seq('pub', repeat($.definition)),
-        repeat($.definition)
+        seq('pub', repeat1($.definition)),
+        repeat1($.definition)
       )
     ),
 
@@ -100,25 +103,25 @@ module.exports = grammar({
       'unit'
     ),
 
-    user_type: $ => prec(2, seq(
+    user_type: $ => seq(
       $.path,
       optional(seq(
         '[',
         commaSep($.type),
         ']'
       ))
-    )),
+    ),
 
     generic_type: $ => seq(
       '?',
       $.identifier
     ),
 
-    tuple_type: $ => prec(2, seq(
+    tuple_type: $ => seq(
       '{',
       commaSep($.type),
       '}'
-    )),
+    ),
 
     arrow_type: $ => prec.right(9, seq(
       field('parameter', $.type),
@@ -168,7 +171,7 @@ module.exports = grammar({
       '}'
     )),
 
-    let_expression: $ => prec.right(seq(
+    let_expression: $ => prec.right(2, seq(
       'let',
       field('pattern', $.pattern),
       '=',
