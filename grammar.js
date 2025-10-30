@@ -1,20 +1,25 @@
 module.exports = grammar({
-  name: 'your_language',
+  name: 'flare',
 
   extras: $ => [
     /\s/,
     $.comment,
   ],
+  supertypes: $ => [
+    $.expression,
+    $.pattern,
+    $.type,
+    $.definition,
+  ],
+
+  // word: $ => $.identifier,
 
   conflicts: $ => [
     // [$.expression, $.constructor, $.fielded_constructor],
     [$.constructor, $.fielded_constructor],
-    // [$.user_type, $.pattern_variant],
-    [$.pattern_variant, $.pattern_atom],
+    // [$.let_declaration, $.let_expression],
     // [$.tuple_type, $.pattern_tuple],
-    // [$.tuple_type, $.pattern_atom],
   ],
-
   rules: {
     source_file: $ => $.package,
 
@@ -26,7 +31,7 @@ module.exports = grammar({
       '=',
       choice(
         seq('pub', repeat1($.definition)),
-        repeat1($.definition)
+        repeat($.definition)
       )
     ),
 
@@ -38,7 +43,7 @@ module.exports = grammar({
       $.import_statement
     ),
 
-    let_declaration: $ => prec(1, seq(
+    let_declaration: $ => prec(10, seq(
       'let',
       field('name', $.identifier),
       repeat(field('parameter', $.identifier)),
@@ -103,14 +108,14 @@ module.exports = grammar({
       'unit'
     ),
 
-    user_type: $ => prec(1, seq(
+    user_type: $ => seq(
       $.path,
       optional(seq(
         '[',
         commaSep($.type),
         ']'
       ))
-    )),
+    ),
 
     generic_type: $ => seq(
       '?',
@@ -130,6 +135,7 @@ module.exports = grammar({
     )),
 
     expression: $ => choice(
+      $.let_expression,
       $.number,
       $.string,
       $.boolean,
@@ -137,8 +143,8 @@ module.exports = grammar({
       $.if_expression,
       $.match_expression,
       $.lambda,
-      $.parenthesized_expression,
       // $.let_expression,
+      $.parenthesized_expression,
       $.constructor,
       $.fielded_constructor,
       $.binary_expression,
@@ -146,7 +152,7 @@ module.exports = grammar({
       $.field_access,
       $.path,
       $.identifier,
-      $.let_expression,
+      // $.let_expression,
     ),
 
     number: $ => /\d+(\.\d+)?/,
@@ -172,7 +178,7 @@ module.exports = grammar({
       '}'
     )),
 
-    let_expression: $ => prec.right(seq(
+    let_expression: $ => prec(1, seq(
       'let',
       field('pattern', $.pattern),
       '=',
@@ -270,6 +276,7 @@ module.exports = grammar({
     pattern: $ => choice(
       $.pattern_tuple,
       $.pattern_variant,
+      $.pattern_variable,
       $.pattern_atom
     ),
 
@@ -279,17 +286,18 @@ module.exports = grammar({
       '}'
     ),
 
-    pattern_variant: $ => seq(
+    pattern_variant: $ => prec(1, seq(
       choice($.identifier, $.path),
-      optional(seq(
+      seq(
         '{',
         commaSep($.pattern),
         '}'
-      ))
-    ),
+      )
+    )),
+
+    pattern_variable: $ => $.identifier,
 
     pattern_atom: $ => choice(
-      $.identifier,
       $.number,
       $.string,
       $.type
