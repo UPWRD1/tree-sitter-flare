@@ -52,12 +52,8 @@
                 }
               },
               {
-                "type": "FIELD",
-                "name": "def",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "definition"
-                }
+                "type": "SYMBOL",
+                "name": "definition"
               }
             ]
           }
@@ -740,7 +736,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "constructor"
+          "name": "product_constructor"
         },
         {
           "type": "SYMBOL",
@@ -1101,7 +1097,7 @@
         ]
       }
     },
-    "constructor": {
+    "product_constructor": {
       "type": "PREC",
       "value": 2,
       "content": {
@@ -1273,6 +1269,41 @@
             "type": "SYMBOL",
             "name": "expression"
           }
+        }
+      ]
+    },
+    "sum_constructor": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "|"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "identifier"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "expression"
+                }
+              ]
+            },
+            {
+              "type": "SYMBOL",
+              "name": "identifier"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "|"
         }
       ]
     },
@@ -1640,7 +1671,7 @@
   ],
   "conflicts": [
     [
-      "constructor",
+      "product_constructor",
       "fielded_constructor"
     ]
   ],

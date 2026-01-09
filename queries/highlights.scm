@@ -34,8 +34,7 @@
   "*"
   "/"
   "."
-  "|"
-  "?"
+  
 ] @operator
 
 ; Comparison operators
@@ -49,6 +48,7 @@
   "}"
   "["
   "]"
+  "|"
 ] @punctuation.bracket
 
 [
@@ -57,7 +57,7 @@
 ] @punctuation.delimiter
 
 ; Literals
-(number) @number
+(number) @constant
 (string) @string
 (boolean) @constant.builtin
 
@@ -69,11 +69,11 @@
   name: (identifier) @function)
 
 (let_declaration
-  parameter: (identifier) @parameter)
+  parameter: (identifier) @variable.parameter)
 
 ; Lambda parameters
 (lambda
-  parameter: (identifier) @parameter)
+  parameter: (identifier) @variable.parameter)
 
 ; Extern declarations
 (extern_declaration
@@ -86,7 +86,7 @@
 (user_type
   (identifier) @type)
 
-(generic_type) @type
+(generic_type) @type.parameter
 
 (arrow_type) @type
 
@@ -94,6 +94,15 @@
   field_name:(identifier) @property
   field_ty :(type) @type
   )
+
+(sum_type
+  variant_name: (identifier) @type.enum.variant)
+
+
+(sum_type
+  variant_name: (identifier) @type.enum.variant
+  variant_data: (type) @type
+)
 ; Type definitions
 
 
@@ -108,10 +117,10 @@
   ; (path) @constructor)
 
 ; Constructors in expressions
-(constructor
+(product_constructor
   (identifier) @constructor)
 
-(constructor
+(product_constructor
   (path) @constructor)
 
 (fielded_constructor
@@ -143,7 +152,7 @@
   (expression) @namespace)
 
 ; Variables and identifiers (fallback)
-(identifier) @variable
+; (identifier) @variable
 
 ; Path components
 (path

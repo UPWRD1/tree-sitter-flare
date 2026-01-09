@@ -1,16 +1,7 @@
 package Main = 
     use Math.factorial
-    # use Option.Option
-    # use Option.unwrap
-    #use Opt.Option
-    #use Opt.unwrap
-    #use Opt.unwrap_or
-    
-   # extern println: str -> unit
-
-    #extern concat: str -> str -> str
-    #extern format: ?T -> str
-    #extern exit: num -> unit
+        
+    extern println: str -> unit
 
     pub type P = {
         d: str,
@@ -26,13 +17,14 @@ package Main =
     let id x : ?T -> ?T =
         x
     
-    let main = 
+    let main : infer = 
          let a = Option.Some 2 in
          #   id a
 
         let b = Option.Some 3 in
-           (unwrap a) * (unwrap b)
-
+           match a in
+            |Some x| then x,
+            |None| then 0
         # let i = S {d = "asdf", f = fn x y => concat x (display_num y)} in
         #    let en = Option.Some {"asdf"} in
         #         let f = factorial (unwrap en) in

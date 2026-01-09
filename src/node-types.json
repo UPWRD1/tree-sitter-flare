@@ -38,10 +38,6 @@
         "named": true
       },
       {
-        "type": "constructor",
-        "named": true
-      },
-      {
         "type": "field_access",
         "named": true
       },
@@ -79,6 +75,10 @@
       },
       {
         "type": "path",
+        "named": true
+      },
+      {
+        "type": "product_constructor",
         "named": true
       },
       {
@@ -254,21 +254,6 @@
     "type": "comparison_operator",
     "named": true,
     "fields": {}
-  },
-  {
-    "type": "constructor",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "expression",
-          "named": true
-        }
-      ]
-    }
   },
   {
     "type": "extern_declaration",
@@ -586,16 +571,6 @@
     "type": "package",
     "named": true,
     "fields": {
-      "def": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "definition",
-            "named": true
-          }
-        ]
-      },
       "package_name": {
         "multiple": false,
         "required": true,
@@ -616,6 +591,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "definition",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -720,6 +705,21 @@
     "type": "primitive_type",
     "named": true,
     "fields": {}
+  },
+  {
+    "type": "product_constructor",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "expression",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "product_type",

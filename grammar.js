@@ -18,8 +18,8 @@ module.exports = grammar({
   // word: $ => $.identifier,
 
   conflicts: $ => [
-    // [$.expression, $.constructor, $.fielded_constructor],
-    [$.constructor, $.fielded_constructor],
+    // [$.expression, $.product_constructor, $.fielded_constructor],
+    [$.product_constructor, $.fielded_constructor],
     // [$.let_declaration, $.let_expression],
     // [$.tuple_type, $.pattern_tuple],
   ],
@@ -35,7 +35,7 @@ module.exports = grammar({
       repeat(
         seq(
           field('pub', optional('pub')),
-          field('def', $.definition),
+           $.definition,
         )  
       )
     ),
@@ -150,7 +150,7 @@ module.exports = grammar({
       $.lambda,
       // $.let_expression,
       $.parenthesized_expression,
-      $.constructor,
+      $.product_constructor,
       $.fielded_constructor,
       $.binary_expression,
       $.call_expression,
@@ -220,7 +220,7 @@ module.exports = grammar({
       field('body', $.expression)
     )),
 
-    constructor: $ => prec(2, seq(
+    product_constructor: $ => prec(2, seq(
       choice($.identifier, $.path),
       '{',
       commaSep($.expression),
@@ -238,6 +238,18 @@ module.exports = grammar({
       field('field', $.identifier),
       '=',
       field('value', $.expression)
+    ),
+
+    sum_constructor: $ => seq(
+      '|',
+      choice(
+        seq(
+          $.identifier,
+          $.expression
+        ),
+        $.identifier,
+      ),
+      '|'
     ),
 
     binary_expression: $ => choice(
