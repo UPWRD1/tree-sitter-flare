@@ -11,7 +11,7 @@ package Main =
     impl Functor for Option[?T] =
         def map o f : Self -> (?T -> ?U) -> Option[?U] =
             match o in
-                | Some x| => |Some (f x)|,,
+                | Some x| => |Some (f x)|,
                 | None | =>  |None|,
           
     let main : infer = 

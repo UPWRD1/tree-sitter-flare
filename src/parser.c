@@ -858,21 +858,21 @@ static const TSMapSlice ts_field_map_slices[PRODUCTION_ID_COUNT] = {
   [20] = {.index = 36, .length = 2},
   [21] = {.index = 38, .length = 2},
   [22] = {.index = 40, .length = 3},
-  [23] = {.index = 43, .length = 2},
-  [24] = {.index = 45, .length = 4},
-  [25] = {.index = 49, .length = 2},
-  [26] = {.index = 51, .length = 3},
-  [27] = {.index = 54, .length = 4},
-  [28] = {.index = 58, .length = 4},
-  [29] = {.index = 62, .length = 3},
-  [30] = {.index = 65, .length = 3},
-  [31] = {.index = 68, .length = 1},
-  [32] = {.index = 69, .length = 2},
-  [33] = {.index = 71, .length = 8},
-  [34] = {.index = 79, .length = 2},
-  [35] = {.index = 81, .length = 4},
-  [36] = {.index = 85, .length = 4},
-  [37] = {.index = 89, .length = 4},
+  [23] = {.index = 43, .length = 3},
+  [24] = {.index = 46, .length = 4},
+  [25] = {.index = 50, .length = 2},
+  [26] = {.index = 52, .length = 3},
+  [27] = {.index = 55, .length = 4},
+  [28] = {.index = 59, .length = 4},
+  [29] = {.index = 63, .length = 3},
+  [30] = {.index = 66, .length = 3},
+  [31] = {.index = 69, .length = 1},
+  [32] = {.index = 70, .length = 2},
+  [33] = {.index = 72, .length = 8},
+  [34] = {.index = 80, .length = 2},
+  [35] = {.index = 82, .length = 4},
+  [36] = {.index = 86, .length = 4},
+  [37] = {.index = 90, .length = 4},
 };
 
 static const TSFieldMapEntry ts_field_map_entries[] = {
@@ -944,42 +944,43 @@ static const TSFieldMapEntry ts_field_map_entries[] = {
   [43] =
     {field_callee, 0},
     {field_func, 4},
-  [45] =
+    {field_name, 2},
+  [46] =
     {field_body, 5, .inherited = true},
     {field_name, 5, .inherited = true},
     {field_parameter, 5, .inherited = true},
     {field_type, 5, .inherited = true},
-  [49] =
+  [50] =
     {field_variant_data, 2},
     {field_variant_name, 1},
-  [51] =
+  [52] =
     {field_variant_data, 2, .inherited = true},
     {field_variant_name, 1},
     {field_variant_name, 2, .inherited = true},
-  [54] =
+  [55] =
     {field_variant_data, 0, .inherited = true},
     {field_variant_data, 1, .inherited = true},
     {field_variant_name, 0, .inherited = true},
     {field_variant_name, 1, .inherited = true},
-  [58] =
+  [59] =
     {field_body, 6},
     {field_name, 1},
     {field_parameter, 2, .inherited = true},
     {field_type, 4},
-  [62] =
+  [63] =
     {field_body, 5},
     {field_pattern, 1},
     {field_value, 3},
-  [65] =
+  [66] =
     {field_alternative, 5},
     {field_condition, 1},
     {field_consequence, 3},
-  [68] =
-    {field_pattern, 1},
   [69] =
+    {field_pattern, 1},
+  [70] =
     {field_pattern, 0, .inherited = true},
     {field_pattern, 1, .inherited = true},
-  [71] =
+  [72] =
     {field_body, 0, .inherited = true},
     {field_body, 1, .inherited = true},
     {field_name, 0, .inherited = true},
@@ -988,20 +989,20 @@ static const TSFieldMapEntry ts_field_map_entries[] = {
     {field_parameter, 1, .inherited = true},
     {field_type, 0, .inherited = true},
     {field_type, 1, .inherited = true},
-  [79] =
+  [80] =
     {field_field_name, 1},
     {field_field_ty, 3},
-  [81] =
+  [82] =
     {field_variant_data, 2},
     {field_variant_data, 3, .inherited = true},
     {field_variant_name, 1},
     {field_variant_name, 3, .inherited = true},
-  [85] =
+  [86] =
     {field_field_name, 1},
     {field_field_name, 4, .inherited = true},
     {field_field_ty, 3},
     {field_field_ty, 4, .inherited = true},
-  [89] =
+  [90] =
     {field_field_name, 0, .inherited = true},
     {field_field_name, 1, .inherited = true},
     {field_field_ty, 0, .inherited = true},

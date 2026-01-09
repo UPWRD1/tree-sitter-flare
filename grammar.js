@@ -322,7 +322,7 @@ module.exports = grammar({
 
     prop_access: $ => prec.left(10, seq(
       field('callee', $.expression),
-      choice('::', seq(':', $.identifier, ':')),
+      choice('::', seq(':', field('name', $.identifier), ':')),
       field('func', $.expression),
     )),
 
