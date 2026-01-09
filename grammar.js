@@ -37,8 +37,7 @@ module.exports = grammar({
 
     definition: $ => choice(
       $.let_declaration,
-      $.struct_definition,
-      $.enum_definition,
+      $.type_definition,
       $.extern_declaration,
       $.import_statement
     ),
@@ -52,35 +51,13 @@ module.exports = grammar({
       field('body', $.expression)
     )),
 
-    struct_definition: $ => prec(10, seq(
-      'struct',
+    type_definition: $ => prec(10, seq(
+      'type',
       field('name', $.user_type),
       '=',
-      commaSep($.struct_field)
+      field('type', $.type)  
     )),
-
-    struct_field: $ => seq(
-      field('name', $.identifier),
-      ':',
-      field('type', $.type)
-    ),
-
-    enum_definition: $ => seq(
-      'enum',
-      field('name', $.type),
-      '=',
-      commaSep($.enum_variant)
-    ),
-
-    enum_variant: $ => seq(
-      field('name', $.identifier),
-      optional(seq(
-        '{',
-        commaSep($.type),
-        '}'
-      ))
-    ),
-
+       
     extern_declaration: $ => seq(
       'extern',
       field('name', $.identifier),
@@ -98,7 +75,9 @@ module.exports = grammar({
       $.user_type,
       $.generic_type,
       $.tuple_type,
-      $.arrow_type
+      $.arrow_type,
+      $.product_type,
+      $.sum_type,
     ),
 
     primitive_type: $ => choice(
@@ -118,8 +97,9 @@ module.exports = grammar({
     )),
 
     generic_type: $ => seq(
-      '?',
-      $.identifier
+      field('sigil', '?'),
+      //'?',
+      field('name', $.identifier)
     ),
 
     tuple_type: $ => prec(1, seq(
@@ -132,6 +112,27 @@ module.exports = grammar({
       field('parameter', $.type),
       '->',
       field('return', $.type)
+    )),
+
+    product_type: $ => prec(2, seq(
+      '{',
+      commaSep(seq(
+        field("field_name", $.identifier),
+        ':',
+        field("field_ty", $.type)
+      )),
+      '}'
+    )),
+  
+    sum_type: $ => prec.left(seq(
+      '|',
+      commaSep(
+        seq(
+          field("variant_name", $.identifier),
+          field("variant_data", optional($.type))
+        )
+      ),
+      '|'
     )),
 
     expression: $ => choice(

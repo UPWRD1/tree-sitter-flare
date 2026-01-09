@@ -1,1 +1,2 @@
-/Users/lukedavis/Documents/GitHub/tree-sitter-flare/test/corpus/ntest.flr
+/Users/lukedavis/Projects/GitHub/tree-sitter-flare/test/corpus/ntest.flr
+/Users/lukedavis/Projects/GitHub/flare/flare/examples/ntest.flr

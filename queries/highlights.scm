@@ -10,8 +10,7 @@
   "then"
   "else"
   "match"
-  "struct"
-  "enum"
+  "type"
   "extern"
   "use"
   "pub"
@@ -91,19 +90,15 @@
 
 (arrow_type) @type
 
-; Struct definitions
-(struct_definition
+(product_type
+  field_name:(identifier) @property
+  field_ty :(type) @type
+  )
+; Type definitions
+
+
+(type_definition
   name: (user_type) @type )
-
-(struct_field
-  name: (identifier) @property)
-
-; Enum definitions
-(enum_definition
-  name: (type) @type)
-
-(enum_variant
-  name: (identifier) @constructor)
 
 ; Pattern matching
 (pattern_variant
