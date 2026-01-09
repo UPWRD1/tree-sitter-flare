@@ -305,7 +305,7 @@ module.exports = grammar({
 
     pattern_variant: $ => prec.left(1, seq(
       '|',
-      $.identifier,
+      field('variant_name', $.identifier),
       optional($.pattern),
       '|'
     )),

@@ -4,10 +4,12 @@
 [
   "package"
   "pub"
+  "type"
   "let"
   "in"
   "fn"
   "if"
+  ; "impl"
   "then"
   "else"
   "match"
@@ -56,6 +58,7 @@
   ":"
 ] @punctuation.delimiter
 
+; "?" @type.parameter
 ; Literals
 (number) @constant
 (string) @string
@@ -86,6 +89,7 @@
 (user_type
   (identifier) @type)
 
+
 (generic_type) @type.parameter
 
 (arrow_type) @type
@@ -98,23 +102,13 @@
 (sum_type
   variant_name: (identifier) @type.enum.variant)
 
-
-(sum_type
-  variant_name: (identifier) @type.enum.variant
-  variant_data: (type) @type
-)
 ; Type definitions
-
-
 (type_definition
   name: (user_type) @type )
 
 ; Pattern matching
 (pattern_variant
-  (identifier) @constructor)
-
-; (pattern_variant
-  ; (path) @constructor)
+  (identifier) @type.enum.variant)
 
 ; Constructors in expressions
 (product_constructor
@@ -132,6 +126,7 @@
 ; Field access and assignments
 (field_access
   field: (identifier) @property)
+  
 
 (field_assignment
   field: (identifier) @property)
@@ -145,14 +140,14 @@
 
 ; Package names
 (package
-  package_name: (identifier) @namespace)
+  (identifier) @namespace)
 
 ; Import paths
 (import_statement
   (expression) @namespace)
 
 ; Variables and identifiers (fallback)
-; (identifier) @variable
+;(identifier) @variable
 
 ; Path components
 (path
