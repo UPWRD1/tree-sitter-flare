@@ -864,14 +864,50 @@
             "named": true
           }
         ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "prop_qualifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "prop_qualifier",
+    "named": true,
+    "fields": {
+      "lcolon": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": ":",
+            "named": false
+          }
+        ]
       },
       "name": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "identifier",
             "named": true
+          }
+        ]
+      },
+      "rcolon": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": ":",
+            "named": false
           }
         ]
       }

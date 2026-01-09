@@ -320,9 +320,15 @@ module.exports = grammar({
       field('field', $.identifier)
     )),
 
+    prop_qualifier: $ => seq(
+      field('lcolon', token(':')),
+      field('name', $.identifier),
+      field('rcolon', token(':')),
+    ),
+
     prop_access: $ => prec.left(10, seq(
       field('callee', $.expression),
-      choice('::', seq(':', field('name', $.identifier), ':')),
+      choice('::', $.prop_qualifier),
       field('func', $.expression),
     )),
 

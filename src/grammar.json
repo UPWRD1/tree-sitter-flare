@@ -1726,6 +1726,41 @@
         ]
       }
     },
+    "prop_qualifier": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "lcolon",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": ":"
+            }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "rcolon",
+          "content": {
+            "type": "TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": ":"
+            }
+          }
+        }
+      ]
+    },
     "prop_access": {
       "type": "PREC_LEFT",
       "value": 10,
@@ -1748,25 +1783,8 @@
                 "value": "::"
               },
               {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": ":"
-                  },
-                  {
-                    "type": "FIELD",
-                    "name": "name",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "identifier"
-                    }
-                  },
-                  {
-                    "type": "STRING",
-                    "value": ":"
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "prop_qualifier"
               }
             ]
           },
