@@ -2,30 +2,22 @@ package Main =
     use Math.factorial
         
     extern println: str -> unit
-
-    pub type P = {
-        d: str,
-        f: str -> num -> str
-    }
-
+ 
+    pub prop Functor = 
+        fmap: Self -> (?A -> ?B) -> Functor[?B]
+    
     pub type Option[?T] = |Some ?T, None|
 
-    pub let None : Option[?T] = |None|
-
-    let x = 3
-
-    let id x : ?T -> ?T =
-        x
-    
+    impl Functor for Option[?T] =
+        def map o f : Self -> (?T -> ?U) -> Option[?U] =
+            match o in
+                | Some x| => |Some (f x)|,,
+                | None | =>  |None|,
+          
     let main : infer = 
-         let a = Option.Some 2 in
-         #   id a
-
-        let b = Option.Some 3 in
-           match a in
-            |Some x| then x,
-            |None| then 0
-        # let i = S {d = "asdf", f = fn x y => concat x (display_num y)} in
-        #    let en = Option.Some {"asdf"} in
-        #         let f = factorial (unwrap en) in
-        #                i.f i.d (f)
+        let a = Some 2 in
+        let b = Some 3 in
+            a :: fmap (fn x => x * 2)
+                +
+            b :Functor: fmap (fn x => x * 3)
+                      

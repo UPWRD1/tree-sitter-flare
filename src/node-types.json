@@ -8,11 +8,19 @@
         "named": true
       },
       {
+        "type": "impl_block",
+        "named": true
+      },
+      {
         "type": "import_statement",
         "named": true
       },
       {
         "type": "let_declaration",
+        "named": true
+      },
+      {
+        "type": "property_definition",
         "named": true
       },
       {
@@ -82,6 +90,10 @@
         "named": true
       },
       {
+        "type": "prop_access",
+        "named": true
+      },
+      {
         "type": "string",
         "named": true
       },
@@ -123,6 +135,10 @@
       },
       {
         "type": "generic_type",
+        "named": true
+      },
+      {
+        "type": "grouped_type",
         "named": true
       },
       {
@@ -383,6 +399,21 @@
     }
   },
   {
+    "type": "grouped_type",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "if_expression",
     "named": true,
     "fields": {
@@ -416,6 +447,62 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "impl_block",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "parameter": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "type",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "user_type",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -685,15 +772,22 @@
   {
     "type": "pattern_variant",
     "named": true,
-    "fields": {},
+    "fields": {
+      "variant_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
-      "multiple": true,
-      "required": true,
+      "multiple": false,
+      "required": false,
       "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
         {
           "type": "pattern",
           "named": true
@@ -745,6 +839,61 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "prop_access",
+    "named": true,
+    "fields": {
+      "callee": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      },
+      "func": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "expression",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "property_definition",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "type",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -922,6 +1071,10 @@
     "named": false
   },
   {
+    "type": "::",
+    "named": false
+  },
+  {
     "type": "<",
     "named": false
   },
@@ -971,6 +1124,10 @@
     "extra": true
   },
   {
+    "type": "def",
+    "named": false
+  },
+  {
     "type": "else",
     "named": false
   },
@@ -987,11 +1144,19 @@
     "named": false
   },
   {
+    "type": "for",
+    "named": false
+  },
+  {
     "type": "identifier",
     "named": true
   },
   {
     "type": "if",
+    "named": false
+  },
+  {
+    "type": "impl",
     "named": false
   },
   {
@@ -1016,6 +1181,10 @@
   },
   {
     "type": "package",
+    "named": false
+  },
+  {
+    "type": "prop",
     "named": false
   },
   {

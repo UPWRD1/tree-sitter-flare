@@ -18,11 +18,8 @@ module.exports = grammar({
   // word: $ => $.identifier,
 
   conflicts: $ => [
-    // [$.expression, $.product_constructor, $.fielded_constructor],
     [$.product_constructor, $.fielded_constructor],
-    // [$.let_declaration, $.let_expression],
-    // [$.tuple_type, $.pattern_tuple],
-  ],
+    ],
   rules: {
     source_file: $ => $.package,
 
@@ -44,7 +41,9 @@ module.exports = grammar({
       $.let_declaration,
       $.type_definition,
       $.extern_declaration,
-      $.import_statement
+      $.import_statement,
+      $.property_definition,
+      $.impl_block,
     ),
 
     let_declaration: $ => prec(10, seq(
@@ -74,6 +73,39 @@ module.exports = grammar({
       'use',
       $.expression),
 
+    property_definition: $ => seq(
+      'prop',
+      $.user_type,
+      '=',
+      commaSep(
+        seq(
+          $.identifier,
+          ':',
+          $.type,
+        )
+      )
+    ),
+
+    impl_block: $ => seq(
+      'impl',
+      $.user_type,
+      'for',
+      $.user_type,
+      '=',
+      repeat(
+        seq(
+          'def',
+          field('name', $.identifier),
+          repeat(field('parameter', $.identifier)),
+          optional(seq(':', field('type', $.type))),
+          '=',
+          field('body', $.expression)
+        )
+      )
+    ),
+  
+    
+
     type: $ => choice(
       $.primitive_type,
       $.user_type,
@@ -82,7 +114,10 @@ module.exports = grammar({
       $.arrow_type,
       $.product_type,
       $.sum_type,
+      $.grouped_type,
     ),
+
+    grouped_type: $ => seq('(', $.type, ')'),
 
     primitive_type: $ => choice(
       'num',
@@ -152,9 +187,11 @@ module.exports = grammar({
       $.parenthesized_expression,
       $.product_constructor,
       $.fielded_constructor,
+      $.prop_access,
       $.binary_expression,
       $.call_expression,
       $.field_access,
+      
       $.path,
       $.identifier,
       // $.let_expression,
@@ -209,8 +246,7 @@ module.exports = grammar({
         field('pattern', $.pattern),
         'then',
         field('body', $.expression),
-        
-      )
+        )
     )),
 
     lambda: $ => prec.right(seq(
@@ -284,6 +320,12 @@ module.exports = grammar({
       field('field', $.identifier)
     )),
 
+    prop_access: $ => prec.left(10, seq(
+      field('callee', $.expression),
+      choice('::', seq(':', $.identifier, ':')),
+      field('func', $.expression),
+    )),
+
     parenthesized_expression: $ => seq(
       '(',
       $.expression,
@@ -303,7 +345,7 @@ module.exports = grammar({
       '}'
     ),
 
-    pattern_variant: $ => prec.left(1, seq(
+    pattern_variant: $ =>  prec.right(seq(
       '|',
       field('variant_name', $.identifier),
       optional($.pattern),
