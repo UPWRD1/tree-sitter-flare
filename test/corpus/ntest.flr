@@ -5,18 +5,23 @@ package Main =
     #use Opt.Option
     #use Opt.unwrap
     #use Opt.unwrap_or
-    use Option
-
+    
    # extern println: str -> unit
 
     #extern concat: str -> str -> str
     #extern format: ?T -> str
     #extern exit: num -> unit
 
-   pub type S = {
+    pub type P = {
         d: str,
         f: str -> num -> str
     }
+
+    pub type Option[?T] = |Some ?T, None|
+
+    pub let None : Option[?T] = |None|
+
+    let x = 3
 
     let id x : ?T -> ?T =
         x

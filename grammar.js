@@ -5,6 +5,9 @@ module.exports = grammar({
     /\s/,
     $.comment,
   ],
+
+  word: $ => $.identifier,
+  
   supertypes: $ => [
     $.expression,
     $.pattern,
@@ -69,8 +72,7 @@ module.exports = grammar({
 
     import_statement: $ => seq(
       'use',
-      $.expression
-    ),
+      $.expression),
 
     type: $ => choice(
       $.primitive_type,
@@ -202,13 +204,13 @@ module.exports = grammar({
     match_expression: $ => prec.right(seq(
       'match',
       field('value', $.expression),
-      repeat(seq(
-        '|',
+      'in',
+      commaSep(
         field('pattern', $.pattern),
         'then',
         field('body', $.expression),
-        optional(',')
-      ))
+        
+      )
     )),
 
     lambda: $ => prec.right(seq(
@@ -289,13 +291,11 @@ module.exports = grammar({
       '}'
     ),
 
-    pattern_variant: $ => prec(1, seq(
-      choice($.identifier, $.path),
-      seq(
-        '|',
-        commaSep($.pattern),
-        '|'
-      )
+    pattern_variant: $ => prec.left(1, seq(
+      '|',
+      $.identifier,
+      optional($.pattern),
+      '|'
     )),
 
     pattern_variable: $ => $.identifier,
@@ -303,7 +303,7 @@ module.exports = grammar({
     pattern_atom: $ => choice(
       $.number,
       $.string,
-      $.type
+      // $.type
     ),
   }
 });

@@ -104,8 +104,8 @@
 (pattern_variant
   (identifier) @constructor)
 
-(pattern_variant
-  (path) @constructor)
+; (pattern_variant
+  ; (path) @constructor)
 
 ; Constructors in expressions
 (constructor
