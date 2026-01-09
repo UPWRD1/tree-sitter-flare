@@ -27,11 +27,13 @@ module.exports = grammar({
 
     package: $ => seq(
       'package',
-      $.identifier,
+      field('package_name', $.identifier),
       '=',
-      choice(
-        seq('pub', repeat1($.definition)),
-        repeat($.definition)
+      repeat(
+        seq(
+          field('pub', optional('pub')),
+          field('def', $.definition),
+        )  
       )
     ),
 
@@ -290,9 +292,9 @@ module.exports = grammar({
     pattern_variant: $ => prec(1, seq(
       choice($.identifier, $.path),
       seq(
-        '{',
+        '|',
         commaSep($.pattern),
-        '}'
+        '|'
       )
     )),
 

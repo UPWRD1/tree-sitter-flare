@@ -3,6 +3,7 @@
 ; Keywords
 [
   "package"
+  "pub"
   "let"
   "in"
   "fn"
@@ -13,7 +14,6 @@
   "type"
   "extern"
   "use"
-  "pub"
 ] @keyword
 
 ; Primitive types
@@ -136,7 +136,7 @@
 
 ; Package names
 (package
-  (identifier) @namespace)
+  package_name: (identifier) @namespace)
 
 ; Import paths
 (import_statement

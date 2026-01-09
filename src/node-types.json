@@ -595,20 +595,37 @@
   {
     "type": "package",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "definition",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
+    "fields": {
+      "def": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "definition",
+            "named": true
+          }
+        ]
+      },
+      "package_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "pub": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "pub",
+            "named": false
+          }
+        ]
+      }
     }
   },
   {

@@ -13,18 +13,19 @@ package Main =
     #extern format: ?T -> str
     #extern exit: num -> unit
 
-    struct S =
+   pub type S = {
         d: str,
         f: str -> num -> str
+    }
 
     let id x : ?T -> ?T =
         x
     
     let main = 
-         let a = Option.Some {{1, 2}} in
+         let a = Option.Some 2 in
          #   id a
 
-        let b = Option.Some {3} in
+        let b = Option.Some 3 in
            (unwrap a) * (unwrap b)
 
         # let i = S {d = "asdf", f = fn x y => concat x (display_num y)} in

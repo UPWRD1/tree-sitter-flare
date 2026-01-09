@@ -18,40 +18,48 @@
           "value": "package"
         },
         {
-          "type": "SYMBOL",
-          "name": "identifier"
+          "type": "FIELD",
+          "name": "package_name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
         },
         {
           "type": "STRING",
           "value": "="
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "pub"
-                },
-                {
-                  "type": "REPEAT1",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "definition"
-                  }
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "FIELD",
+                "name": "pub",
+                "content": {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "STRING",
+                      "value": "pub"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 }
-              ]
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SYMBOL",
-                "name": "definition"
+              },
+              {
+                "type": "FIELD",
+                "name": "def",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "definition"
+                }
               }
-            }
-          ]
+            ]
+          }
         }
       ]
     },
@@ -1579,7 +1587,7 @@
             "members": [
               {
                 "type": "STRING",
-                "value": "{"
+                "value": "|"
               },
               {
                 "type": "CHOICE",
@@ -1628,7 +1636,7 @@
               },
               {
                 "type": "STRING",
-                "value": "}"
+                "value": "|"
               }
             ]
           }
