@@ -9,11 +9,10 @@ package Main =
     pub type Option[?T] = |Some ?T, None|
 
     impl Functor for Option[?T] =
-        def map o f
-            : Option[?T] -> (?T -> ?U) -> Option[?U] =
+        def map o f : Option[?T] -> (?T -> ?U) -> Option[?U] =
             match o in
                 | Some x| then |Some (f x)|,
-                | None | then  |None|,
+                | None | then  |None|
           
     let main : infer = 
         let a = Some 2 in

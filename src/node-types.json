@@ -925,15 +925,22 @@
   {
     "type": "property_definition",
     "named": true,
-    "fields": {},
+    "fields": {
+      "method_name": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": true,
       "types": [
-        {
-          "type": "identifier",
-          "named": true
-        },
         {
           "type": "type",
           "named": true

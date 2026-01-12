@@ -81,7 +81,7 @@ module.exports = grammar({
       '=',
       commaSep(
         seq(
-          $.identifier,
+          field('method_name', $.identifier),
           ':',
           $.type,
         )
