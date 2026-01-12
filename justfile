@@ -17,11 +17,10 @@ show_hx:
     tree-sitter highlight --query-paths ~/.config/helix/runtime/queries/flare/highlights.scm --paths paths.txt
 
 commit_hash := `git rev-parse HEAD`
-
+sync_git := `git commit -a -m "updating helix" && git push`
     
 update_hx config_file="~/.config/helix/languages.toml":
-    git commit -a -m "updating helix"
-    git push
+    if git status --porcelain != "" {sync_git}
       
     sed -i.bak  "s/rev = \"[a-f0-9]\{40\}\"/rev = \"{{commit_hash}}\"/" {{config_file}}
     rm {{config_file}}.bak
