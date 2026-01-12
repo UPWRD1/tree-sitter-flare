@@ -18,11 +18,12 @@ show_hx:
 
 commit_hash := `git rev-parse HEAD`
 
+    
 update_hx config_file="~/.config/helix/languages.toml":
     git commit -a -m "updating helix"
     git push
-        
-    sed -i.bak f"s/rev = \"[a-f0-9]\{40\}\"/rev = \"{{commit_hash}}\"/" {{config_file}}
+      
+    sed -i.bak  "s/rev = \"[a-f0-9]\{40\}\"/rev = \"{{commit_hash}}\"/" {{config_file}}
     rm {{config_file}}.bak
     
     hx --grammar fetch
