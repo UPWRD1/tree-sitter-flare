@@ -19,7 +19,9 @@ module.exports = grammar({
 
   conflicts: $ => [
     [$.product_constructor, $.fielded_constructor],
-    ],
+    // [$.sum_type]
+  ],
+  
   rules: {
     source_file: $ => $.package,
 
@@ -86,6 +88,15 @@ module.exports = grammar({
       )
     ),
 
+    def_definition: $ => seq(
+          'def',
+          field('name', $.identifier),
+          repeat(field('parameter', $.identifier)),
+          optional(seq(':', field('type', $.type))),
+          '=',
+          field('body', $.expression)
+    ),
+
     impl_block: $ => seq(
       'impl',
       $.user_type,
@@ -93,14 +104,7 @@ module.exports = grammar({
       $.user_type,
       '=',
       repeat(
-        seq(
-          'def',
-          field('name', $.identifier),
-          repeat(field('parameter', $.identifier)),
-          optional(seq(':', field('type', $.type))),
-          '=',
-          field('body', $.expression)
-        )
+        $.def_definition
       )
     ),
   
@@ -163,7 +167,7 @@ module.exports = grammar({
       '}'
     )),
   
-    sum_type: $ => prec.left(seq(
+    sum_type: $ => prec.right(2, seq(
       '|',
       commaSep(
         seq(
@@ -278,13 +282,8 @@ module.exports = grammar({
 
     sum_constructor: $ => seq(
       '|',
-      choice(
-        seq(
-          $.identifier,
-          $.expression
-        ),
-        $.identifier,
-      ),
+      $.identifier,
+      optional($.expression),
       '|'
     ),
 
