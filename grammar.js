@@ -171,6 +171,7 @@ export default grammar({
     _expression: $ => seq(
       choice(
         $.let_expression,
+        $.unit_expr,
         $.number,
         $.string,
         $.boolean,
@@ -198,6 +199,8 @@ export default grammar({
       '"'
     ),
 
+    unit_expr: _ => 'unit',
+
     boolean: _$ => choice('true', 'false'),
 
     identifier: _$ => new RustRegex('(?i)[a-z_][a-z0-9_]*'),
@@ -209,25 +212,25 @@ export default grammar({
 
     path_or_id: $ => choice($.path, $.identifier),
 
-    let_expression: $ => prec.left(seq(
+    let_expression: $ => seq(
       'let',
       field('pattern', $.pattern),
       '=',
       field('value', $._expression),
       'in',
       field('body', $._expression)
-    )),
+    ),
 
-    if_expression: $ => prec.right(seq(
+    if_expression: $ => seq(
       'if',
       field('condition', $._expression),
       'then',
       field('consequence', $._expression),
       'else',
       field('alternative', $._expression)
-    )),
+    ),
 
-    match_expression: $ => prec.left(seq(
+    match_expression: $ => seq(
       'match',
       field('value', $._expression),
       forward_sep_by(seq(
@@ -236,7 +239,7 @@ export default grammar({
         field('body', $._expression),
       ), 'as',),
       'end'
-    )),
+    ),
 
     lambda: $ => prec.right(seq(
       'fn',
@@ -255,8 +258,13 @@ export default grammar({
     ),
 
     field_assignment: $ => seq(
-      field('name', $.identifier),
-      field('args', repeat($.identifier)),
+      choice(
+        field('function_field',seq(
+          field('name', $.identifier),
+          field('arg', repeat1($.identifier)
+        ))),
+        field('val_field', field('name', $.identifier)),
+      ),
       choice(
         seq(
           '=',

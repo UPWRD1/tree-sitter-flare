@@ -11,22 +11,17 @@ test: build
 testp: build
     tree-sitter parse test/corpus/ntest.flr -c
 
-show:
+show: build
     tree-sitter highlight --query-paths ./queries/highlights.scm --paths paths.txt
 show_hx:
     tree-sitter highlight --query-paths ~/.config/helix/runtime/queries/flare/highlights.scm --paths paths.txt
-
-commit_hash := `git rev-parse HEAD`
-git_status := `git status --porcelain`
     
-update_hx config_file="~/.config/helix/languages.toml":
+update_hx:
     if git_status; then \
         git commit -a -m "updating helix"; \
         git push; \
     fi
-      
-    sed -i.bak  "s/rev = \"[a-f0-9]\{40\}\"/rev = \"{{commit_hash}}\"/" {{config_file}}
-    rm {{config_file}}.bak
     
     hx --grammar fetch
     hx --grammar build
+    

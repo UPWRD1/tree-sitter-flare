@@ -4,6 +4,7 @@
 [
   "as"
   "end"
+  "extend"
   "extern"
   "in"
   "else"
@@ -12,7 +13,6 @@
   "in"
   "let"
   "match"
-  "pub"
   "then"
   "type"
   "use"
@@ -63,7 +63,7 @@
 (number) @constant
 (string) @string
 (boolean) @constant.builtin
-(unit) @constant.builtin
+(unit_expr) @constant.builtin
 
 ; Comments
 (comment) @comment
@@ -73,7 +73,7 @@
   parameter: (identifier) @variable.parameter)
 
 ; Extern declarations
-(extern_declaration
+(extern_macro
   name: (identifier) @function)
 
 ; Types
@@ -90,39 +90,31 @@
 
 (product_type
   field_name:(identifier) @property
-  field_ty :(type) @type
-  )
+  field_ty :(_type) @type
+)
 
 (sum_type
   variant_name: (identifier) @type.enum.variant)
 
 ; Type definitions
-(type_definition
+(type_macro
   name: (user_type) @type )
 
 ; Pattern matching
 (pattern_variant
   (identifier) @type.enum.variant)
 
-; Constructors in expressions
-(product_constructor
-  (identifier) @constructor)
-
-(product_constructor
-  (path) @constructor)
-
-(fielded_constructor
-  (identifier) @constructor)
-
-(fielded_constructor
-  (path) @constructor)
-
 ; Field access and assignments
-(field_access
-  field: (identifier) @property)
   
+(field_assignment
+  name: (identifier) @function
+  arg: (identifier) @variable.parameter
+)
 
 (field_assignment
+  val_field: (identifier) @property)
+
+(field_access
   field: (identifier) @property)
 
 ; Function calls
@@ -130,18 +122,7 @@
   function: (identifier) @function.call)
 
 (call_expression
-  function: (path) @function.call)
-
-; Package names
-(package
-  (identifier) @namespace)
-
-; Import paths
-(import_statement
-  (expression) @namespace)
-
-; Variables and identifiers (fallback)
-;(identifier) @variable
+  function: (identifier) @function.call)
 
 ; Path components
 (path
