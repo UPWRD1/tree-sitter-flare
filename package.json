@@ -8,6 +8,7 @@
     "name": "Luke Davis",
     "email": "luke.n.davis.7@gmail.com"
   },
+  "type": "module",
   "main": "bindings/node",
   "types": "bindings/node",
   "keywords": [

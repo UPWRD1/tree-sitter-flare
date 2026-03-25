@@ -1,23 +1,28 @@
-package Main = 
+Main = {
     use Math.factorial
         
     extern println: str -> unit
  
-    pub prop Functor = 
+    type Functor = {
         fmap: Self -> (?A -> ?B) -> Functor[?B]
+    }
     
-    pub type Option[?T] = |Some ?T, None|
+    type Option[?T] = |Some ?T, None|
 
-    impl Functor for Option[?T] =
-        def map o f : Option[?T] -> (?T -> ?U) -> Option[?U] =
-            match o in
-                | Some x| then |Some (f x)|,
-                | None | then  |None|
-          
-    let main : infer = 
+    extend Option[?T] :: Functor = {
+        map o f : Option[?T] -> (?T -> ?U) -> Option[?U] =
+            match o 
+               as | Some x| then |Some (f x)|
+               as | None | then  |None|
+            
+    }
+    
+    x: num = 3
+       
+    main: num = 
         let a = Some 2 in
         let b = Some 3 in
-            a :: fmap (fn x => x * 2)
-                +
-            b :Functor: fmap (fn x => x * 3)
-                      
+        a :: fmap (fn x => x * 2)
+            +
+        b :Functor: fmap (fn x => x * 3)
+}            
