@@ -1,3 +1,24 @@
+const PREC = {
+  // this resolves a conflict between the usage of ':' in a lambda vs in a
+  // typed parameter. In the case of a lambda, we don't allow typed parameters.
+  lambda: -2,
+  // typed_parameter: -1,
+  // conditional: -1,
+
+  parenthesized_expression: 1,
+
+  type_arrow: 9,
+
+  compare: 13,
+  add: 18,
+  mul: 19,
+  // unary: 20,
+  // power: 21,
+  property: 22,
+  call: 23,
+  access: 24,
+};
+
 export default grammar({
   name: 'flare',
 
@@ -8,27 +29,47 @@ export default grammar({
     $.comment,
   ],
 
+  reserved: {
+    global: _ => [
+      'as',
+      'end',
+      'extern',
+      'in',
+      'else',
+      'fn',
+      'if',
+      'in',
+      'let',
+      'match',
+      'then',
+      'type',
+      'use',
+    ],
+  },
   word: $ => $.identifier,
 
   supertypes: $ => [
-    $.expression,
     $.pattern,
     $._type,
     $.path_or_id,
     $.macro_invoke,
   ],
 
+  conflicts: $ => [
+    [$._expression],
+  ],
+
   rules: {
     source_file: $ => newlineSep($.field_assignment),
 
-    comment: _$ => /#[^\n]*/,
+    comment: _ => /#[^\n]*/,
 
-    macro_invoke: $ => prec(11, choice(
+    macro_invoke: $ => choice(
       $.use_macro,
       $.extern_macro,
       $.type_macro,
       $.extend_macro,
-    )),
+    ),
 
     type_macro: $ => seq(
       'type',
@@ -46,7 +87,7 @@ export default grammar({
 
     use_macro: $ => seq(
       'use',
-      $.expression,
+      $._expression,
     ),
 
     extend_macro: $ => seq(
@@ -86,27 +127,27 @@ export default grammar({
 
     self_type: _ => 'self',
 
-    user_type: $ => prec(6, seq(
+    user_type: $ => seq(
       choice($.path_or_id),
       optional(seq(
         '[',
         commaSep($._type),
         ']'
       ))
-    )),
+    ),
 
     generic_type: $ => seq(
       field('sigil', '?'),
       field('name', $.identifier)
     ),
 
-    arrow_type: $ => prec.right(9, seq(
+    arrow_type: $ => prec.right(PREC.type_arrow, seq(
       field('parameter', $._type),
       '->',
       field('return', $._type)
     )),
 
-    product_type: $ => prec(3, seq(
+    product_type: $ => prec.right(seq(
       '{',
       flareSep(seq(
         field("field_name", $.identifier),
@@ -116,7 +157,7 @@ export default grammar({
       '}'
     )),
 
-    sum_type: $ => prec.right(3, seq(
+    sum_type: $ => prec.right(seq(
       '|',
       flareSep(
         seq(
@@ -127,21 +168,24 @@ export default grammar({
       '|'
     )),
 
-    expression: $ => choice(
-      $.let_expression,
-      $.number,
-      $.string,
-      $.boolean,
-      $.if_expression,
-      $.match_expression,
-      $.lambda,
-      $.parenthesized_expression,
-      $.fielded_constructor,
-      $.sum_constructor,
-      $.prop_access,
-      $.binary_expression,
-      $.call_expression,
-      $.identifier,
+    _expression: $ => seq(
+      choice(
+        $.let_expression,
+        $.number,
+        $.string,
+        $.boolean,
+        $.if_expression,
+        $.match_expression,
+        $.lambda,
+        $.parenthesized_expression,
+        $.fielded_constructor,
+        $.sum_constructor,
+        $.prop_access,
+        $.binary_expression,
+        $.call_expression,
+        $.identifier,
+      ),
+      optional('\n'),
     ),
 
     line_join: _ => token(seq('\\', choice(seq(optional('\r'), '\n'), '\0'))),
@@ -158,49 +202,47 @@ export default grammar({
 
     identifier: _$ => new RustRegex('(?i)[a-z_][a-z0-9_]*'),
 
-    path: $ => prec.left(11, seq(
+    path: $ => prec.left(PREC.access, seq(
       $.identifier,
       repeat1(seq('.', $.identifier))
     )),
 
     path_or_id: $ => choice($.path, $.identifier),
 
-    let_expression: $ => seq(
+    let_expression: $ => prec.left(seq(
       'let',
       field('pattern', $.pattern),
       '=',
-      field('value', $.expression),
+      field('value', $._expression),
       'in',
-      field('body', $.expression)
-    ),
+      field('body', $._expression)
+    )),
 
     if_expression: $ => prec.right(seq(
       'if',
-
-optional('\n'),      field('condition', $.expression),
+      field('condition', $._expression),
       'then',
-      field('consequence', $.expression),
+      field('consequence', $._expression),
       'else',
-      field('alternative', $.expression)
+      field('alternative', $._expression)
     )),
 
-    match_expression: $ => prec.right(seq(
+    match_expression: $ => prec.left(seq(
       'match',
-      field('value', $.expression),
-      optional('\n'),
-      flareSep(seq(
-        'as',
+      field('value', $._expression),
+      forward_sep_by(seq(
         field('pattern', $.pattern),
         'then',
-        field('body', $.expression),
-      ))
+        field('body', $._expression),
+      ), 'as',),
+      'end'
     )),
 
     lambda: $ => prec.right(seq(
       'fn',
       repeat1(field('parameter', $.identifier)),
       '=>',
-      field('body', $.expression)
+      field('body', $._expression)
     )),
 
     fielded_constructor: $ => seq(
@@ -218,14 +260,14 @@ optional('\n'),      field('condition', $.expression),
       choice(
         seq(
           '=',
-          field('value', $.expression)
+          field('value', $._expression)
         ),
         seq(
           ':',
           field('type', $._type),
           optional(seq(
             '=',
-            field('value', $.expression)
+            field('value', $._expression)
           )),
         ),
       )
@@ -234,7 +276,7 @@ optional('\n'),      field('condition', $.expression),
     sum_constructor: $ => prec.right(seq(
       '|',
       $.identifier,
-      optional($.expression),
+      optional($._expression),
       '|'
     )),
 
@@ -247,18 +289,18 @@ optional('\n'),      field('condition', $.expression),
       $.cmp_expression,
     ),
 
-    mul_expression: $ => prec.left(8, seq($.expression, '*', $.expression)),
+    mul_expression: $ => prec.left(PREC.mul, seq($._expression, '*', $._expression)),
 
-    div_expression: $ => prec.left(8, seq($.expression, '/', $.expression)),
+    div_expression: $ => prec.left(PREC.mul, seq($._expression, '/', $._expression)),
 
-    add_expression: $ => prec.left(7, seq($.expression, '+', $.expression)),
+    add_expression: $ => prec.left(PREC.add, seq($._expression, '+', $._expression)),
 
-    sub_expression: $ => prec.left(7, seq($.expression, '-', $.expression)),
+    sub_expression: $ => prec.left(PREC.add, seq($._expression, '-', $._expression)),
 
-    cmp_expression: $ => prec.left(5, seq(
-      field('left', $.expression),
+    cmp_expression: $ => prec.left(PREC.compare, seq(
+      field('left', $._expression),
       field('operator', $.comparison_operator),
-      field('right', $.expression)
+      field('right', $._expression)
     )),
 
     comparison_operator: _$ => choice(
@@ -270,13 +312,13 @@ optional('\n'),      field('condition', $.expression),
       '>='
     ),
 
-    call_expression: $ => prec.left(3, seq(
-      field('function', $.expression),
-      field('argument', $.expression)
+    call_expression: $ => prec.left(PREC.call, seq(
+      field('function', $._expression),
+      field('argument', $._expression)
     )),
 
-    field_access: $ => prec.left(9, seq(
-      field('object', $.expression),
+    field_access: $ => prec.left(PREC.access, seq(
+      field('object', $._expression),
       '.',
       field('field', $.identifier)
     )),
@@ -287,15 +329,15 @@ optional('\n'),      field('condition', $.expression),
       field('rcolon', token(':')),
     ),
 
-    prop_access: $ => prec.left(10, seq(
-      field('callee', $.expression),
+    prop_access: $ => prec.left(PREC.property, seq(
+      field('callee', $._expression),
       choice('::', $.prop_qualifier),
-      field('func', $.expression),
+      field('func', $._expression),
     )),
 
     parenthesized_expression: $ => seq(
       '(',
-      $.expression,
+      $._expression,
       ')'
     ),
 
@@ -341,6 +383,19 @@ function commaSep(rule) {
     repeat(seq(',', rule)),
     optional(',')
   ));
+}
+
+function sep_by(rule, separator) {
+  return optional(seq(
+    rule,
+    repeat(seq(separator, rule)),
+    optional(separator)
+  ));
+}
+
+
+function forward_sep_by(rule, separator) {
+  return repeat(seq(separator, rule));
 }
 
 function newlineSep(rule) {

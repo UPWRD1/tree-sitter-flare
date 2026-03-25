@@ -3,6 +3,7 @@
 ; Keywords
 [
   "as"
+  "end"
   "extern"
   "in"
   "else"

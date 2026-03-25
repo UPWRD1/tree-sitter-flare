@@ -10,16 +10,19 @@ Main = {
 		    match i :: extract 
 			    as | Some x | then x
 		        as | None   | then Sys.panic "unwrap failed"
+			end
 
 	    unwrap_or i alternative : self -> ?T -> ?T =
-		    match i :: extract as
+		    match i :: extract
 			    as | Some x | then x
 		        as | None    | then alternative
+			end
 
 	    expect i msg : self -> str -> ?T =
-		    match i :: extract as
+		    match i :: extract
 		        as | Some x | then x
-		        as | None    | then Sys.panic msg
+		        as | None   | then Sys.panic msg
+			end
     }
 
 	type Point = {
@@ -29,16 +32,19 @@ Main = {
 
 	type Option[?T] = | Some ?T, None |
 
-	extend Option[?T] :: Fallible[?T] = {
+    extend Option[?T] :: Fallible[?T] = {
 		extract self = self
 	}
 
 	type Result[?T, ?E] = | Ok ?T, Err ?E |
 
 	extend Result[?T, ?E] :: Fallible[?T] = {
-	    extract self = match self
-				as | Ok x  | => Some x
-		        as | Err _ | => None
+	    extract self =
+			match self
+				as | Ok x  | then Some x
+		        as | Err _ | then None
+			end 
+				
 	}
   
 	safe_slope p1 p2: Point -> Point -> Option[num] = (
@@ -51,5 +57,6 @@ Main = {
 	main: num = 
 		let p1 = {x = 3, y = 4} in
 		let p2 = {x = 3, y = 6} in
-		safe_slope p1 p2 :: unwrap_or 3
+		let random = {data = p2, extra = unit} in
+		safe_slope p1 random.data :: unwrap_or 3
 }
