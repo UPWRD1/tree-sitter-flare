@@ -83,7 +83,6 @@
 (user_type
   (identifier) @type)
 
-
 (generic_type) @type.parameter
 
 (arrow_type) @type
@@ -108,7 +107,7 @@
   
 (field_assignment
   name: (identifier) @function
-  arg: (identifier) @variable.parameter
+  arg: (identifier)+ @variable.parameter
 )
 
 (field_assignment
@@ -118,9 +117,6 @@
   field: (identifier) @property)
 
 ; Function calls
-(call_expression
-  function: (identifier) @function.call)
-
 (call_expression
   function: (identifier) @function.call)
 
