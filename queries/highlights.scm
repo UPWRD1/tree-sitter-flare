@@ -2,19 +2,18 @@
 
 ; Keywords
 [
-  "package"
-  "pub"
-  "type"
-  "let"
+  "as"
+  "extern"
   "in"
+  "else"
   "fn"
   "if"
-  ; "impl"
-  "then"
-  "else"
+  "in"
+  "let"
   "match"
+  "pub"
+  "then"
   "type"
-  "extern"
   "use"
 ] @keyword
 
@@ -63,16 +62,10 @@
 (number) @constant
 (string) @string
 (boolean) @constant.builtin
+(unit) @constant.builtin
 
 ; Comments
 (comment) @comment
-
-; Function definitions
-(let_declaration
-  name: (identifier) @function)
-
-(let_declaration
-  parameter: (identifier) @variable.parameter)
 
 ; Lambda parameters
 (lambda

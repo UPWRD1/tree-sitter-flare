@@ -2,13 +2,14 @@ export default grammar({
   name: 'flare',
 
   extras: $ => [
+    $.line_join,
     /\s/,
     // / \t\r/,
     $.comment,
-   ],
+  ],
 
   word: $ => $.identifier,
-  
+
   supertypes: $ => [
     $.expression,
     $.pattern,
@@ -33,9 +34,9 @@ export default grammar({
       'type',
       field('name', $.user_type),
       '=',
-      field('the_type', $._type)  
+      field('the_type', $._type)
     ),
-       
+
     extern_macro: $ => seq(
       'extern',
       field('name', $.identifier),
@@ -45,22 +46,27 @@ export default grammar({
 
     use_macro: $ => seq(
       'use',
-      $.path,
+      $.expression,
     ),
 
     extend_macro: $ => seq(
       'extend',
       field('implementor', $._type),
-      '::',
-      field('spec', $.user_type),
+      optional(
+        seq(
+          '::',
+          field('spec', $.user_type),
+        )
+      ),
       '=',
       '{',
       flareSep($.field_assignment),
       '}',
     ),
-     
-   _type: $ => choice(
+
+    _type: $ => choice(
       $.primitive_type,
+      $.self_type,
       $.user_type,
       $.generic_type,
       $.arrow_type,
@@ -77,6 +83,8 @@ export default grammar({
       'bool',
       'unit'
     ),
+
+    self_type: _ => 'self',
 
     user_type: $ => prec(6, seq(
       choice($.path_or_id),
@@ -107,7 +115,7 @@ export default grammar({
       )),
       '}'
     )),
-  
+
     sum_type: $ => prec.right(3, seq(
       '|',
       flareSep(
@@ -118,7 +126,7 @@ export default grammar({
       ),
       '|'
     )),
-  
+
     expression: $ => choice(
       $.let_expression,
       $.number,
@@ -133,14 +141,14 @@ export default grammar({
       $.prop_access,
       $.binary_expression,
       $.call_expression,
-      $.field_access,
-      $.path,
       $.identifier,
     ),
 
-    number: _$ => /\d+(\.\d+)?/,
+    line_join: _ => token(seq('\\', choice(seq(optional('\r'), '\n'), '\0'))),
 
-    string: _$ => seq(
+    number: _ => /\d+(\.\d+)?/,
+
+    string: _ => seq(
       '"',
       /[^"]*/,
       '"'
@@ -149,15 +157,15 @@ export default grammar({
     boolean: _$ => choice('true', 'false'),
 
     identifier: _$ => new RustRegex('(?i)[a-z_][a-z0-9_]*'),
-    
-    path: $ => prec.left(10, seq(
+
+    path: $ => prec.left(11, seq(
       $.identifier,
       repeat1(seq('.', $.identifier))
     )),
 
     path_or_id: $ => choice($.path, $.identifier),
 
-    let_expression: $ =>  seq(
+    let_expression: $ => seq(
       'let',
       field('pattern', $.pattern),
       '=',
@@ -168,7 +176,8 @@ export default grammar({
 
     if_expression: $ => prec.right(seq(
       'if',
-      field('condition', $.expression),
+
+optional('\n'),      field('condition', $.expression),
       'then',
       field('consequence', $.expression),
       'else',
@@ -179,12 +188,12 @@ export default grammar({
       'match',
       field('value', $.expression),
       optional('\n'),
-      repeat1(seq(
+      flareSep(seq(
         'as',
         field('pattern', $.pattern),
         'then',
         field('body', $.expression),
-        ))
+      ))
     )),
 
     lambda: $ => prec.right(seq(
@@ -194,7 +203,7 @@ export default grammar({
       field('body', $.expression)
     )),
 
-    fielded_constructor: $ =>  seq(
+    fielded_constructor: $ => seq(
       '{',
       flareSep(choice(
         $.macro_invoke,
@@ -203,7 +212,7 @@ export default grammar({
       '}'
     ),
 
-    field_assignment: $ =>  seq(
+    field_assignment: $ => seq(
       field('name', $.identifier),
       field('args', repeat($.identifier)),
       choice(
@@ -230,6 +239,7 @@ export default grammar({
     )),
 
     binary_expression: $ => choice(
+      $.field_access,
       $.mul_expression,
       $.div_expression,
       $.add_expression,
@@ -246,11 +256,11 @@ export default grammar({
     sub_expression: $ => prec.left(7, seq($.expression, '-', $.expression)),
 
     cmp_expression: $ => prec.left(5, seq(
-        field('left', $.expression),
-        field('operator', $.comparison_operator),
-        field('right', $.expression)
-      )),
-    
+      field('left', $.expression),
+      field('operator', $.comparison_operator),
+      field('right', $.expression)
+    )),
+
     comparison_operator: _$ => choice(
       '==',
       '!=',
@@ -314,7 +324,6 @@ export default grammar({
     pattern_atom: $ => choice(
       $.number,
       $.string,
-      // $.type
     ),
   }
 });

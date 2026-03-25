@@ -24,6 +24,10 @@
         "named": true
       },
       {
+        "type": "self_type",
+        "named": true
+      },
+      {
         "type": "sum_type",
         "named": true
       },
@@ -47,10 +51,6 @@
       },
       {
         "type": "call_expression",
-        "named": true
-      },
-      {
-        "type": "field_access",
         "named": true
       },
       {
@@ -83,10 +83,6 @@
       },
       {
         "type": "parenthesized_expression",
-        "named": true
-      },
-      {
-        "type": "path",
         "named": true
       },
       {
@@ -223,6 +219,10 @@
           "named": true
         },
         {
+          "type": "field_access",
+          "named": true
+        },
+        {
           "type": "mul_expression",
           "named": true
         },
@@ -336,7 +336,7 @@
       },
       "spec": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "user_type",
@@ -618,7 +618,7 @@
     "fields": {
       "body": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "expression",
@@ -628,7 +628,7 @@
       },
       "pattern": {
         "multiple": true,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "pattern",
@@ -983,7 +983,7 @@
       "required": true,
       "types": [
         {
-          "type": "path",
+          "type": "expression",
           "named": true
         }
       ]
@@ -1154,6 +1154,11 @@
     "named": false
   },
   {
+    "type": "line_join",
+    "named": true,
+    "extra": true
+  },
+  {
     "type": "match",
     "named": false
   },
@@ -1163,6 +1168,10 @@
   },
   {
     "type": "number",
+    "named": true
+  },
+  {
+    "type": "self_type",
     "named": true
   },
   {
