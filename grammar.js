@@ -54,9 +54,9 @@ export default grammar({
     $.macro_invoke,
   ],
 
-  conflicts: $ => [
-    [$._expression],
-  ],
+  // conflicts: $ => [
+  //   [$._expression],
+  // ],
 
   rules: {
     source_file: $ => newlineSep($.field_assignment),
@@ -169,8 +169,7 @@ export default grammar({
       '|'
     )),
 
-    _expression: $ => seq(
-      choice(
+    _expression: $ => choice(
         $.let_expression,
         $.if_expression,
         $.match_expression,
@@ -180,8 +179,6 @@ export default grammar({
         $.call_expression,
         $._primary_expression,
       ),
-      optional('\n'),
-    ),
 
     _primary_expression: $ => choice(
       $.unit_expr,

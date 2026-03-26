@@ -953,56 +953,39 @@
       }
     },
     "_expression": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "let_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "if_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "match_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "lambda"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "prop_access"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "binary_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "call_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_primary_expression"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "let_expression"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "\n"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "SYMBOL",
+          "name": "if_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "match_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "lambda"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "prop_access"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "binary_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "call_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_primary_expression"
         }
       ]
     },
@@ -2057,11 +2040,7 @@
       "name": "comment"
     }
   ],
-  "conflicts": [
-    [
-      "_expression"
-    ]
-  ],
+  "conflicts": [],
   "precedences": [],
   "externals": [],
   "inline": [],

@@ -47,12 +47,12 @@ Main = {
 				
 	}
   
-	safe_slope p1 p2: Point -> Point -> Option[num] = (
+	safe_slope p1 p2: Point -> Point -> Option[num] = 
         let denominator = p2.x - p1.x in
 		if denominator == 0 then None else
 		let numerator = p2.y - p1.x in 
 		numerator / denominator
-    )
+    
   
 	main: num = 
 		let p1 = {x = 3, y = 4} in

@@ -275,13 +275,9 @@
         ]
       },
       "function": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
@@ -351,13 +347,9 @@
     "named": true,
     "fields": {
       "left": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
@@ -431,13 +423,9 @@
         ]
       },
       "right": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
@@ -655,13 +643,9 @@
         ]
       },
       "object": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
@@ -771,13 +755,9 @@
         ]
       },
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
@@ -907,13 +887,9 @@
     "named": true,
     "fields": {
       "alternative": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
@@ -977,13 +953,9 @@
         ]
       },
       "condition": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
@@ -1047,13 +1019,9 @@
         ]
       },
       "consequence": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
@@ -1123,13 +1091,9 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
@@ -1209,13 +1173,9 @@
     "named": true,
     "fields": {
       "body": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
@@ -1289,13 +1249,9 @@
         ]
       },
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
@@ -1369,10 +1325,6 @@
         "required": true,
         "types": [
           {
-            "type": "\n",
-            "named": false
-          },
-          {
             "type": "binary_expression",
             "named": true
           },
@@ -1445,13 +1397,9 @@
         ]
       },
       "value": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
-          {
-            "type": "\n",
-            "named": false
-          },
           {
             "type": "binary_expression",
             "named": true
