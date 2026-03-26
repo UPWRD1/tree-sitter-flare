@@ -1,6 +1,6 @@
 build:
+    tree-sitter generate
     tree-sitter build
-    tree-sitter generate   
 
 default:
     test

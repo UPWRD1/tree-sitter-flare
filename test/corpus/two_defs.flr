@@ -1,0 +1,4 @@
+Test = {
+	one: num = 1
+	two: unit -> num = 2
+}

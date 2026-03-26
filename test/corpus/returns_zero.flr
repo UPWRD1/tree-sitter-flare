@@ -1,0 +1,3 @@
+Test = {
+	test: num = 0
+}

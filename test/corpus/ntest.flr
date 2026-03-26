@@ -1,3 +1,6 @@
+==================
+Complicated example
+==================
 Main = {
 	use Sys
 
@@ -60,3 +63,266 @@ Main = {
 		let random = {data = p2, extra = unit} in
 		(safe_slope p1 random.data) :: unwrap_or 3
 }
+
+---
+
+(source_file
+  (field_assignment
+    val_field: (identifier)
+    value: (fielded_constructor
+      (use_macro
+        (identifier))
+      (type_macro
+        name: (user_type
+          (identifier)
+          (generic_type
+            name: (identifier)))
+        the_type: (product_type
+          field_name: (identifier)
+          field_ty: (arrow_type
+            parameter: (self_type)
+            return: (user_type
+              (identifier)
+              (generic_type
+                name: (identifier))))))
+      (extend_macro
+        implementor: (user_type
+          (identifier)
+          (generic_type
+            name: (identifier)))
+        (field_assignment
+          name: (identifier)
+          arg: (identifier)
+          type: (arrow_type
+            parameter: (self_type)
+            return: (generic_type
+              name: (identifier)))
+          value: (match_expression
+            value: (prop_access
+              callee: (identifier)
+              func: (identifier))
+            pattern: (pattern_variant
+              variant_name: (identifier)
+              (pattern_variable
+                (identifier)))
+            body: (identifier)
+            pattern: (pattern_variant
+              variant_name: (identifier))
+            body: (call_expression
+              function: (field_access
+                object: (identifier)
+                field: (identifier))
+              argument: (string))))
+        (field_assignment
+          name: (identifier)
+          arg: (identifier)
+          arg: (identifier)
+          type: (arrow_type
+            parameter: (self_type)
+            return: (arrow_type
+              parameter: (generic_type
+                name: (identifier))
+              return: (generic_type
+                name: (identifier))))
+          value: (match_expression
+            value: (prop_access
+              callee: (identifier)
+              func: (identifier))
+            pattern: (pattern_variant
+              variant_name: (identifier)
+              (pattern_variable
+                (identifier)))
+            body: (identifier)
+            pattern: (pattern_variant
+              variant_name: (identifier))
+            body: (identifier)))
+        (field_assignment
+          name: (identifier)
+          arg: (identifier)
+          arg: (identifier)
+          type: (arrow_type
+            parameter: (self_type)
+            return: (arrow_type
+              parameter: (primitive_type)
+              return: (generic_type
+                name: (identifier))))
+          value: (match_expression
+            value: (prop_access
+              callee: (identifier)
+              func: (identifier))
+            pattern: (pattern_variant
+              variant_name: (identifier)
+              (pattern_variable
+                (identifier)))
+            body: (identifier)
+            pattern: (pattern_variant
+              variant_name: (identifier))
+            body: (call_expression
+              function: (field_access
+                object: (identifier)
+                field: (identifier))
+              argument: (identifier)))))
+      (type_macro
+        name: (user_type
+          (identifier))
+        the_type: (product_type
+          field_name: (identifier)
+          field_ty: (primitive_type)
+          field_name: (identifier)
+          field_ty: (primitive_type)))
+      (type_macro
+        name: (user_type
+          (identifier)
+          (generic_type
+            name: (identifier)))
+        the_type: (sum_type
+          variant_name: (identifier)
+          variant_data: (generic_type
+            name: (identifier))
+          variant_name: (identifier)))
+      (extend_macro
+        implementor: (user_type
+          (identifier)
+          (generic_type
+            name: (identifier)))
+        spec: (user_type
+          (identifier)
+          (generic_type
+            name: (identifier)))
+        (field_assignment
+          name: (identifier)
+          arg: (identifier)
+          value: (identifier)))
+      (type_macro
+        name: (user_type
+          (identifier)
+          (generic_type
+            name: (identifier))
+          (generic_type
+            name: (identifier)))
+        the_type: (sum_type
+          variant_name: (identifier)
+          variant_data: (generic_type
+            name: (identifier))
+          variant_name: (identifier)
+          variant_data: (generic_type
+            name: (identifier))))
+      (extend_macro
+        implementor: (user_type
+          (identifier)
+          (generic_type
+            name: (identifier))
+          (generic_type
+            name: (identifier)))
+        spec: (user_type
+          (identifier)
+          (generic_type
+            name: (identifier)))
+        (field_assignment
+          name: (identifier)
+          arg: (identifier)
+          value: (match_expression
+            value: (identifier)
+            pattern: (pattern_variant
+              variant_name: (identifier)
+              (pattern_variable
+                (identifier)))
+            body: (call_expression
+              function: (identifier)
+              argument: (identifier))
+            pattern: (pattern_variant
+              variant_name: (identifier)
+              (pattern_variable
+                (identifier)))
+            body: (identifier))))
+      (field_assignment
+        name: (identifier)
+        arg: (identifier)
+        arg: (identifier)
+        type: (arrow_type
+          parameter: (user_type
+            (identifier))
+          return: (arrow_type
+            parameter: (user_type
+              (identifier))
+            return: (user_type
+              (identifier)
+              (primitive_type))))
+        value: (let_expression
+          pattern: (pattern_variable
+            (identifier))
+          value: (binary_expression
+            (sub_expression
+              (field_access
+                object: (identifier)
+                field: (identifier))
+              (field_access
+                object: (identifier)
+                field: (identifier))))
+          body: (if_expression
+            condition: (binary_expression
+              (cmp_expression
+                left: (identifier)
+                operator: (comparison_operator)
+                right: (number)))
+            consequence: (identifier)
+            alternative: (let_expression
+              pattern: (pattern_variable
+                (identifier))
+              value: (binary_expression
+                (sub_expression
+                  (field_access
+                    object: (identifier)
+                    field: (identifier))
+                  (field_access
+                    object: (identifier)
+                    field: (identifier))))
+              body: (binary_expression
+                (div_expression
+                  (identifier)
+                  (identifier)))))))
+      (field_assignment
+        val_field: (identifier)
+        type: (primitive_type)
+        value: (let_expression
+          pattern: (pattern_variable
+            (identifier))
+          value: (fielded_constructor
+            (field_assignment
+              val_field: (identifier)
+              value: (number))
+            (field_assignment
+              val_field: (identifier)
+              value: (number)))
+          body: (let_expression
+            pattern: (pattern_variable
+              (identifier))
+            value: (fielded_constructor
+              (field_assignment
+                val_field: (identifier)
+                value: (number))
+              (field_assignment
+                val_field: (identifier)
+                value: (number)))
+            body: (let_expression
+              pattern: (pattern_variable
+                (identifier))
+              value: (fielded_constructor
+                (field_assignment
+                  val_field: (identifier)
+                  value: (identifier))
+                (field_assignment
+                  val_field: (identifier)
+                  value: (unit_expr)))
+              body: (call_expression
+                function: (prop_access
+                  callee: (parenthesized_expression
+                    (call_expression
+                      function: (call_expression
+                        function: (identifier)
+                        argument: (identifier))
+                      argument: (field_access
+                        object: (identifier)
+                        field: (identifier))))
+                  func: (identifier))
+                argument: (number)))))))))

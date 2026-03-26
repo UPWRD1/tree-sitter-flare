@@ -1,0 +1,11 @@
+=========
+Empty Row
+=========
+Test = {}
+
+---
+
+(source_file
+  (field_assignment
+    val_field: (identifier)
+    value: (fielded_constructor)))
