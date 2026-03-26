@@ -104,63 +104,11 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
+          "type": "add_expression",
           "named": true
         },
         {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "fielded_constructor",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "if_expression",
-          "named": true
-        },
-        {
-          "type": "lambda",
-          "named": true
-        },
-        {
-          "type": "let_expression",
-          "named": true
-        },
-        {
-          "type": "match_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "prop_access",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "sum_constructor",
-          "named": true
-        },
-        {
-          "type": "unit_expr",
+          "type": "mul_expression",
           "named": true
         }
       ]
@@ -193,310 +141,12 @@
     }
   },
   {
-    "type": "binary_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "add_expression",
-          "named": true
-        },
-        {
-          "type": "cmp_expression",
-          "named": true
-        },
-        {
-          "type": "div_expression",
-          "named": true
-        },
-        {
-          "type": "field_access",
-          "named": true
-        },
-        {
-          "type": "mul_expression",
-          "named": true
-        },
-        {
-          "type": "sub_expression",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "boolean",
     "named": true,
     "fields": {}
   },
   {
-    "type": "call_expression",
-    "named": true,
-    "fields": {
-      "argument": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
-            "named": true
-          }
-        ]
-      },
-      "function": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "let_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "cmp_expression",
-    "named": true,
-    "fields": {
-      "left": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "let_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
-            "named": true
-          }
-        ]
-      },
-      "operator": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "comparison_operator",
-            "named": true
-          }
-        ]
-      },
-      "right": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "let_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
-    "type": "comparison_operator",
-    "named": true,
-    "fields": {}
-  },
-  {
-    "type": "div_expression",
     "named": true,
     "fields": {},
     "children": {
@@ -504,67 +154,20 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
+          "type": "add_expression",
           "named": true
         },
         {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "fielded_constructor",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "if_expression",
-          "named": true
-        },
-        {
-          "type": "lambda",
-          "named": true
-        },
-        {
-          "type": "let_expression",
-          "named": true
-        },
-        {
-          "type": "match_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "prop_access",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "sum_constructor",
-          "named": true
-        },
-        {
-          "type": "unit_expr",
+          "type": "comparison_operator",
           "named": true
         }
       ]
     }
+  },
+  {
+    "type": "comparison_operator",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "extend_macro",
@@ -629,88 +232,6 @@
     }
   },
   {
-    "type": "field_access",
-    "named": true,
-    "fields": {
-      "field": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "object": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "let_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "field_assignment",
     "named": true,
     "fields": {
@@ -759,23 +280,7 @@
         "required": false,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
+            "type": "cmp_expression",
             "named": true
           },
           {
@@ -792,30 +297,6 @@
           },
           {
             "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
             "named": true
           }
         ]
@@ -891,23 +372,7 @@
         "required": true,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
+            "type": "cmp_expression",
             "named": true
           },
           {
@@ -924,30 +389,6 @@
           },
           {
             "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
             "named": true
           }
         ]
@@ -957,23 +398,7 @@
         "required": true,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
+            "type": "cmp_expression",
             "named": true
           },
           {
@@ -990,30 +415,6 @@
           },
           {
             "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
             "named": true
           }
         ]
@@ -1023,23 +424,7 @@
         "required": true,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
+            "type": "cmp_expression",
             "named": true
           },
           {
@@ -1056,30 +441,6 @@
           },
           {
             "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
             "named": true
           }
         ]
@@ -1095,23 +456,7 @@
         "required": true,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
+            "type": "cmp_expression",
             "named": true
           },
           {
@@ -1128,30 +473,6 @@
           },
           {
             "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
             "named": true
           }
         ]
@@ -1177,23 +498,7 @@
         "required": true,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
+            "type": "cmp_expression",
             "named": true
           },
           {
@@ -1210,30 +515,6 @@
           },
           {
             "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
             "named": true
           }
         ]
@@ -1253,23 +534,7 @@
         "required": true,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
+            "type": "cmp_expression",
             "named": true
           },
           {
@@ -1286,30 +551,6 @@
           },
           {
             "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
             "named": true
           }
         ]
@@ -1325,23 +566,7 @@
         "required": true,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
+            "type": "cmp_expression",
             "named": true
           },
           {
@@ -1358,30 +583,6 @@
           },
           {
             "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
             "named": true
           }
         ]
@@ -1401,23 +602,7 @@
         "required": true,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
+            "type": "cmp_expression",
             "named": true
           },
           {
@@ -1435,30 +620,6 @@
           {
             "type": "match_expression",
             "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
-            "named": true
           }
         ]
       }
@@ -1473,15 +634,7 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
           "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "call_expression",
           "named": true
         },
         {
@@ -1493,19 +646,7 @@
           "named": true
         },
         {
-          "type": "if_expression",
-          "named": true
-        },
-        {
-          "type": "lambda",
-          "named": true
-        },
-        {
-          "type": "let_expression",
-          "named": true
-        },
-        {
-          "type": "match_expression",
+          "type": "mul_expression",
           "named": true
         },
         {
@@ -1514,10 +655,6 @@
         },
         {
           "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "prop_access",
           "named": true
         },
         {
@@ -1544,23 +681,7 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "fielded_constructor",
-          "named": true
-        },
-        {
-          "type": "identifier",
+          "type": "cmp_expression",
           "named": true
         },
         {
@@ -1577,30 +698,6 @@
         },
         {
           "type": "match_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "prop_access",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "sum_constructor",
-          "named": true
-        },
-        {
-          "type": "unit_expr",
           "named": true
         }
       ]
@@ -1728,106 +825,6 @@
     }
   },
   {
-    "type": "prop_access",
-    "named": true,
-    "fields": {
-      "callee": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
-            "named": true
-          }
-        ]
-      },
-      "func": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "prop_qualifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "prop_qualifier",
-    "named": true,
-    "fields": {
-      "lcolon": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": ":",
-            "named": false
-          }
-        ]
-      },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "rcolon": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": ":",
-            "named": false
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -1849,77 +846,6 @@
     "fields": {}
   },
   {
-    "type": "sub_expression",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "fielded_constructor",
-          "named": true
-        },
-        {
-          "type": "identifier",
-          "named": true
-        },
-        {
-          "type": "if_expression",
-          "named": true
-        },
-        {
-          "type": "lambda",
-          "named": true
-        },
-        {
-          "type": "let_expression",
-          "named": true
-        },
-        {
-          "type": "match_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "prop_access",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "sum_constructor",
-          "named": true
-        },
-        {
-          "type": "unit_expr",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "sum_constructor",
     "named": true,
     "fields": {},
@@ -1928,19 +854,7 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "fielded_constructor",
+          "type": "cmp_expression",
           "named": true
         },
         {
@@ -1961,30 +875,6 @@
         },
         {
           "type": "match_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "prop_access",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "sum_constructor",
-          "named": true
-        },
-        {
-          "type": "unit_expr",
           "named": true
         }
       ]
@@ -2056,23 +946,7 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
-          "type": "boolean",
-          "named": true
-        },
-        {
-          "type": "call_expression",
-          "named": true
-        },
-        {
-          "type": "fielded_constructor",
-          "named": true
-        },
-        {
-          "type": "identifier",
+          "type": "cmp_expression",
           "named": true
         },
         {
@@ -2089,30 +963,6 @@
         },
         {
           "type": "match_expression",
-          "named": true
-        },
-        {
-          "type": "number",
-          "named": true
-        },
-        {
-          "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "prop_access",
-          "named": true
-        },
-        {
-          "type": "string",
-          "named": true
-        },
-        {
-          "type": "sum_constructor",
-          "named": true
-        },
-        {
-          "type": "unit_expr",
           "named": true
         }
       ]

@@ -54,6 +54,13 @@ export default grammar({
     $.macro_invoke,
   ],
 
+
+  // inline: $ => [
+  //   $.cmp_expression,
+  //   $.add_expression,
+  //   $.mul_expression,
+  //   $._postfix_expression,
+  // ],
   // conflicts: $ => [
   //   [$._expression],
   // ],
@@ -170,48 +177,12 @@ export default grammar({
     )),
 
     _expression: $ => choice(
-        $.let_expression,
-        $.if_expression,
-        $.match_expression,
-        $.lambda,
-        $.prop_access,
-        $.binary_expression,
-        $.call_expression,
-        $._primary_expression,
-      ),
-
-    _primary_expression: $ => choice(
-      $.unit_expr,
-      $.number,
-      $.string,
-      $.boolean,
-
-      $.parenthesized_expression,
-      $.fielded_constructor,
-      $.sum_constructor,
-      $.identifier,
+      $.let_expression,
+      $.if_expression,
+      $.match_expression,
+      $.lambda,
+      $.cmp_expression,
     ),
-
-    number: _ => /\d+(\.\d+)?/,
-
-    string: _ => seq(
-      '"',
-      /[^"]*/,
-      '"'
-    ),
-
-    unit_expr: _ => 'unit',
-
-    boolean: _ => choice('true', 'false'),
-
-    identifier: _ => new RustRegex('(?i)[a-z_][a-z0-9_]*'),
-
-    path: $ => prec.left(PREC.access, seq(
-      $.identifier,
-      repeat1(seq('.', $.identifier))
-    )),
-
-    path_or_id: $ => choice($.path, $.identifier),
 
     let_expression: $ => seq(
       'let',
@@ -248,6 +219,38 @@ export default grammar({
       '=>',
       field('body', $._expression)
     )),
+
+    _primary_expression: $ => choice(
+      $.unit_expr,
+      $.number,
+      $.string,
+      $.boolean,
+      $.parenthesized_expression,
+      $.fielded_constructor,
+      $.sum_constructor,
+      $.identifier,
+    ),
+
+    number: _ => /\d+(\.\d+)?/,
+
+    string: _ => seq(
+      '"',
+      /[^"]*/,
+      '"'
+    ),
+
+    unit_expr: _ => 'unit',
+
+    boolean: _ => choice('true', 'false'),
+
+    identifier: _ => new RustRegex('(?i)[a-z_][a-z0-9_]*'),
+
+    path: $ => prec.left(PREC.access, seq(
+      $.identifier,
+      repeat1(seq('.', $.identifier))
+    )),
+
+    path_or_id: $ => choice($.path, $.identifier),
 
     fielded_constructor: $ => seq(
       '{',
@@ -289,28 +292,39 @@ export default grammar({
       '|'
     )),
 
-    binary_expression: $ => choice(
-      $.field_access,
-      $.mul_expression,
-      $.div_expression,
-      $.add_expression,
-      $.sub_expression,
-      $.cmp_expression,
+
+    cmp_expression: $ => choice(
+      prec.left(PREC.compare,
+        seq($.add_expression, $.comparison_operator, $.add_expression)
+      ),
+      $.add_expression
     ),
 
-    mul_expression: $ => prec.left(PREC.mul, seq($._expression, '*', $._expression)),
+    add_expression: $ => choice(
+      prec.left(PREC.add,
+        seq($.add_expression, choice('+', '-'), $.mul_expression)
+      ),
+      $.mul_expression),
 
-    div_expression: $ => prec.left(PREC.mul, seq($._expression, '/', $._expression)),
+    mul_expression: $ => choice(
+      prec.left(PREC.mul,
+        seq($.mul_expression, choice('*', '/'), $._postfix_expression)
+      ),
+      $._postfix_expression
+    ),
 
-    add_expression: $ => prec.left(PREC.add, seq($._expression, '+', $._expression)),
-
-    sub_expression: $ => prec.left(PREC.add, seq($._expression, '-', $._expression)),
-
-    cmp_expression: $ => prec.left(PREC.compare, seq(
-      field('left', $._expression),
-      field('operator', $.comparison_operator),
-      field('right', $._expression)
-    )),
+    _postfix_expression: $ => choice(
+      prec.left(PREC.call,
+        seq($._postfix_expression, $._primary_expression)
+      ),
+      prec.left(PREC.access,
+        seq($._postfix_expression, '.', $.identifier)
+      ),
+      prec.left(PREC.property,
+        seq($._postfix_expression, '::', $.identifier)
+      ),
+      $._primary_expression
+    ),
 
     comparison_operator: _$ => choice(
       '==',
@@ -322,12 +336,12 @@ export default grammar({
     ),
 
     call_expression: $ => prec.left(PREC.call, seq(
-      field('function', $._expression),
+      field('function', $._postfix_expression),
       field('argument', $._primary_expression)
     )),
 
     field_access: $ => prec.left(PREC.access, seq(
-      field('object', $._expression),
+      field('object', $._postfix_expression),
       '.',
       field('field', $.identifier)
     )),
@@ -339,7 +353,7 @@ export default grammar({
     ),
 
     prop_access: $ => prec.left(PREC.property, seq(
-      field('callee', $._primary_expression),
+      field('callee', $._postfix_expression),
       choice('::', $.prop_qualifier),
       field('func', $.identifier),
     )),
