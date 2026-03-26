@@ -12,8 +12,6 @@ const PREC = {
   compare: 13,
   add: 18,
   mul: 19,
-  // unary: 20,
-  // power: 21,
   property: 22,
   call: 23,
   access: 24,
@@ -170,25 +168,25 @@ export default grammar({
     )),
 
     _expression: $ => choice(
-        $.let_expression,
-        $.if_expression,
-        $.match_expression,
-        $.lambda,
-        $.prop_access,
-        $.binary_expression,
-        $.call_expression,
-        $._primary_expression,
-      ),
+      $.let_expression,
+      $.if_expression,
+      $.match_expression,
+      $.lambda,
+      $.prop_access,
+      $.binary_expression,
+      $._primary_expression,
+      $.call_expression,
+    ),
 
     _primary_expression: $ => choice(
       $.unit_expr,
       $.number,
       $.string,
       $.boolean,
-
       $.parenthesized_expression,
       $.fielded_constructor,
       $.sum_constructor,
+      $.field_access,
       $.identifier,
     ),
 
@@ -290,7 +288,6 @@ export default grammar({
     )),
 
     binary_expression: $ => choice(
-      $.field_access,
       $.mul_expression,
       $.div_expression,
       $.add_expression,
@@ -298,18 +295,18 @@ export default grammar({
       $.cmp_expression,
     ),
 
-    mul_expression: $ => prec.left(PREC.mul, seq($._expression, '*', $._expression)),
+    mul_expression: $ => prec.left(PREC.mul, seq($._primary_expression, '*', $._primary_expression)),
 
-    div_expression: $ => prec.left(PREC.mul, seq($._expression, '/', $._expression)),
+    div_expression: $ => prec.left(PREC.mul, seq($._primary_expression, '/', $._primary_expression)),
 
-    add_expression: $ => prec.left(PREC.add, seq($._expression, '+', $._expression)),
+    add_expression: $ => prec.left(PREC.add, seq($._primary_expression, '+', $._primary_expression)),
 
-    sub_expression: $ => prec.left(PREC.add, seq($._expression, '-', $._expression)),
+    sub_expression: $ => prec.left(PREC.add, seq($._primary_expression, '-', $._primary_expression)),
 
     cmp_expression: $ => prec.left(PREC.compare, seq(
-      field('left', $._expression),
+      field('left', $._primary_expression),
       field('operator', $.comparison_operator),
-      field('right', $._expression)
+      field('right', $._primary_expression)
     )),
 
     comparison_operator: _$ => choice(
@@ -327,7 +324,7 @@ export default grammar({
     )),
 
     field_access: $ => prec.left(PREC.access, seq(
-      field('object', $._expression),
+      field('object', $._primary_expression),
       '.',
       field('field', $.identifier)
     )),

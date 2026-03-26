@@ -104,15 +104,11 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
           "type": "boolean",
           "named": true
         },
         {
-          "type": "call_expression",
+          "type": "field_access",
           "named": true
         },
         {
@@ -124,31 +120,11 @@
           "named": true
         },
         {
-          "type": "if_expression",
-          "named": true
-        },
-        {
-          "type": "lambda",
-          "named": true
-        },
-        {
-          "type": "let_expression",
-          "named": true
-        },
-        {
-          "type": "match_expression",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
           "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "prop_access",
           "named": true
         },
         {
@@ -213,10 +189,6 @@
           "named": true
         },
         {
-          "type": "field_access",
-          "named": true
-        },
-        {
           "type": "mul_expression",
           "named": true
         },
@@ -242,6 +214,10 @@
         "types": [
           {
             "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "field_access",
             "named": true
           },
           {
@@ -288,6 +264,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "field_access",
             "named": true
           },
           {
@@ -351,15 +331,11 @@
         "required": true,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
             "type": "boolean",
             "named": true
           },
           {
-            "type": "call_expression",
+            "type": "field_access",
             "named": true
           },
           {
@@ -371,31 +347,11 @@
             "named": true
           },
           {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "let_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
             "type": "number",
             "named": true
           },
           {
             "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
             "named": true
           },
           {
@@ -427,15 +383,11 @@
         "required": true,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
             "type": "boolean",
             "named": true
           },
           {
-            "type": "call_expression",
+            "type": "field_access",
             "named": true
           },
           {
@@ -447,31 +399,11 @@
             "named": true
           },
           {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "let_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
             "type": "number",
             "named": true
           },
           {
             "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
             "named": true
           },
           {
@@ -504,15 +436,11 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
           "type": "boolean",
           "named": true
         },
         {
-          "type": "call_expression",
+          "type": "field_access",
           "named": true
         },
         {
@@ -524,31 +452,11 @@
           "named": true
         },
         {
-          "type": "if_expression",
-          "named": true
-        },
-        {
-          "type": "lambda",
-          "named": true
-        },
-        {
-          "type": "let_expression",
-          "named": true
-        },
-        {
-          "type": "match_expression",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
           "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "prop_access",
           "named": true
         },
         {
@@ -647,15 +555,11 @@
         "required": true,
         "types": [
           {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
             "type": "boolean",
             "named": true
           },
           {
-            "type": "call_expression",
+            "type": "field_access",
             "named": true
           },
           {
@@ -667,31 +571,11 @@
             "named": true
           },
           {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "let_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
             "type": "number",
             "named": true
           },
           {
             "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
             "named": true
           },
           {
@@ -768,6 +652,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "field_access",
             "named": true
           },
           {
@@ -903,6 +791,10 @@
             "named": true
           },
           {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "fielded_constructor",
             "named": true
           },
@@ -969,6 +861,10 @@
             "named": true
           },
           {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "fielded_constructor",
             "named": true
           },
@@ -1032,6 +928,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "field_access",
             "named": true
           },
           {
@@ -1104,6 +1004,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "field_access",
             "named": true
           },
           {
@@ -1189,6 +1093,10 @@
             "named": true
           },
           {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "fielded_constructor",
             "named": true
           },
@@ -1262,6 +1170,10 @@
           },
           {
             "type": "call_expression",
+            "named": true
+          },
+          {
+            "type": "field_access",
             "named": true
           },
           {
@@ -1337,6 +1249,10 @@
             "named": true
           },
           {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "fielded_constructor",
             "named": true
           },
@@ -1413,6 +1329,10 @@
             "named": true
           },
           {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "fielded_constructor",
             "named": true
           },
@@ -1473,15 +1393,11 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
           "type": "boolean",
           "named": true
         },
         {
-          "type": "call_expression",
+          "type": "field_access",
           "named": true
         },
         {
@@ -1493,31 +1409,11 @@
           "named": true
         },
         {
-          "type": "if_expression",
-          "named": true
-        },
-        {
-          "type": "lambda",
-          "named": true
-        },
-        {
-          "type": "let_expression",
-          "named": true
-        },
-        {
-          "type": "match_expression",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
           "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "prop_access",
           "named": true
         },
         {
@@ -1553,6 +1449,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "field_access",
           "named": true
         },
         {
@@ -1740,6 +1640,10 @@
             "named": true
           },
           {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "fielded_constructor",
             "named": true
           },
@@ -1857,15 +1761,11 @@
       "required": true,
       "types": [
         {
-          "type": "binary_expression",
-          "named": true
-        },
-        {
           "type": "boolean",
           "named": true
         },
         {
-          "type": "call_expression",
+          "type": "field_access",
           "named": true
         },
         {
@@ -1877,31 +1777,11 @@
           "named": true
         },
         {
-          "type": "if_expression",
-          "named": true
-        },
-        {
-          "type": "lambda",
-          "named": true
-        },
-        {
-          "type": "let_expression",
-          "named": true
-        },
-        {
-          "type": "match_expression",
-          "named": true
-        },
-        {
           "type": "number",
           "named": true
         },
         {
           "type": "parenthesized_expression",
-          "named": true
-        },
-        {
-          "type": "prop_access",
           "named": true
         },
         {
@@ -1937,6 +1817,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "field_access",
           "named": true
         },
         {
@@ -2065,6 +1949,10 @@
         },
         {
           "type": "call_expression",
+          "named": true
+        },
+        {
+          "type": "field_access",
           "named": true
         },
         {
