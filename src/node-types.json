@@ -237,23 +237,11 @@
     "named": true,
     "fields": {
       "argument": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "\n",
-            "named": false
-          },
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
             "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
             "named": true
           },
           {
@@ -265,31 +253,11 @@
             "named": true
           },
           {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "let_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
             "type": "number",
             "named": true
           },
           {
             "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
             "named": true
           },
           {
@@ -1398,7 +1366,7 @@
     "fields": {
       "body": {
         "multiple": true,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "\n",
@@ -1468,7 +1436,7 @@
       },
       "pattern": {
         "multiple": true,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "pattern",
@@ -1816,23 +1784,11 @@
     "named": true,
     "fields": {
       "callee": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "\n",
-            "named": false
-          },
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
             "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
             "named": true
           },
           {
@@ -1844,31 +1800,11 @@
             "named": true
           },
           {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "let_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
             "type": "number",
             "named": true
           },
           {
             "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
             "named": true
           },
           {
@@ -1886,71 +1822,11 @@
         ]
       },
       "func": {
-        "multiple": true,
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "\n",
-            "named": false
-          },
-          {
-            "type": "binary_expression",
-            "named": true
-          },
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "call_expression",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
             "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "if_expression",
-            "named": true
-          },
-          {
-            "type": "lambda",
-            "named": true
-          },
-          {
-            "type": "let_expression",
-            "named": true
-          },
-          {
-            "type": "match_expression",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "prop_access",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
             "named": true
           }
         ]

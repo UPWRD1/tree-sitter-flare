@@ -10,7 +10,6 @@
   "else"
   "fn"
   "if"
-  "in"
   "let"
   "match"
   "then"

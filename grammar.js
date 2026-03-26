@@ -34,7 +34,6 @@ export default grammar({
       'as',
       'end',
       'extern',
-      'in',
       'else',
       'fn',
       'if',
@@ -61,6 +60,8 @@ export default grammar({
 
   rules: {
     source_file: $ => newlineSep($.field_assignment),
+
+    line_join: _ => token(seq('\\', choice(seq(optional('\r'), '\n'), '\0'))),
 
     comment: _ => /#[^\n]*/,
 
@@ -118,7 +119,7 @@ export default grammar({
 
     grouped_type: $ => seq('(', $._type, ')'),
 
-    primitive_type: _$ => choice(
+    primitive_type: _ => choice(
       'num',
       'str',
       'bool',
@@ -171,25 +172,28 @@ export default grammar({
     _expression: $ => seq(
       choice(
         $.let_expression,
-        $.unit_expr,
-        $.number,
-        $.string,
-        $.boolean,
         $.if_expression,
         $.match_expression,
         $.lambda,
-        $.parenthesized_expression,
-        $.fielded_constructor,
-        $.sum_constructor,
         $.prop_access,
         $.binary_expression,
         $.call_expression,
-        $.identifier,
+        $._primary_expression,
       ),
       optional('\n'),
     ),
 
-    line_join: _ => token(seq('\\', choice(seq(optional('\r'), '\n'), '\0'))),
+    _primary_expression: $ => choice(
+      $.unit_expr,
+      $.number,
+      $.string,
+      $.boolean,
+
+      $.parenthesized_expression,
+      $.fielded_constructor,
+      $.sum_constructor,
+      $.identifier,
+    ),
 
     number: _ => /\d+(\.\d+)?/,
 
@@ -201,9 +205,9 @@ export default grammar({
 
     unit_expr: _ => 'unit',
 
-    boolean: _$ => choice('true', 'false'),
+    boolean: _ => choice('true', 'false'),
 
-    identifier: _$ => new RustRegex('(?i)[a-z_][a-z0-9_]*'),
+    identifier: _ => new RustRegex('(?i)[a-z_][a-z0-9_]*'),
 
     path: $ => prec.left(PREC.access, seq(
       $.identifier,
@@ -259,11 +263,11 @@ export default grammar({
 
     field_assignment: $ => seq(
       choice(
-        field('function_field',seq(
+        field('function_field', seq(
           field('name', $.identifier),
           field('arg', repeat1($.identifier)
-        ))),
-        field('val_field', field('name', $.identifier)),
+          ))),
+        field('val_field', $.identifier),
       ),
       choice(
         seq(
@@ -322,7 +326,7 @@ export default grammar({
 
     call_expression: $ => prec.left(PREC.call, seq(
       field('function', $._expression),
-      field('argument', $._expression)
+      field('argument', $._primary_expression)
     )),
 
     field_access: $ => prec.left(PREC.access, seq(
@@ -338,9 +342,9 @@ export default grammar({
     ),
 
     prop_access: $ => prec.left(PREC.property, seq(
-      field('callee', $._expression),
+      field('callee', $._primary_expression),
       choice('::', $.prop_qualifier),
-      field('func', $._expression),
+      field('func', $.identifier),
     )),
 
     parenthesized_expression: $ => seq(
@@ -403,7 +407,7 @@ function sep_by(rule, separator) {
 
 
 function forward_sep_by(rule, separator) {
-  return repeat(seq(separator, rule));
+  return repeat1(seq(separator, rule));
 }
 
 function newlineSep(rule) {

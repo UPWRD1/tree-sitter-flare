@@ -58,5 +58,5 @@ Main = {
 		let p1 = {x = 3, y = 4} in
 		let p2 = {x = 3, y = 6} in
 		let random = {data = p2, extra = unit} in
-		safe_slope p1 random.data :: unwrap_or 3
+		(safe_slope p1 random.data) :: unwrap_or 3
 }

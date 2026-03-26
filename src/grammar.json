@@ -48,6 +48,48 @@
         }
       ]
     },
+    "line_join": {
+      "type": "TOKEN",
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "STRING",
+            "value": "\\"
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "STRING",
+                        "value": "\r"
+                      },
+                      {
+                        "type": "BLANK"
+                      }
+                    ]
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "\n"
+                  }
+                ]
+              },
+              {
+                "type": "STRING",
+                "value": "\u0000"
+              }
+            ]
+          }
+        ]
+      }
+    },
     "comment": {
       "type": "PATTERN",
       "value": "#[^\\n]*"
@@ -922,22 +964,6 @@
             },
             {
               "type": "SYMBOL",
-              "name": "unit_expr"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "number"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "string"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "boolean"
-            },
-            {
-              "type": "SYMBOL",
               "name": "if_expression"
             },
             {
@@ -947,18 +973,6 @@
             {
               "type": "SYMBOL",
               "name": "lambda"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "parenthesized_expression"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "fielded_constructor"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "sum_constructor"
             },
             {
               "type": "SYMBOL",
@@ -974,7 +988,7 @@
             },
             {
               "type": "SYMBOL",
-              "name": "identifier"
+              "name": "_primary_expression"
             }
           ]
         },
@@ -992,47 +1006,42 @@
         }
       ]
     },
-    "line_join": {
-      "type": "TOKEN",
-      "content": {
-        "type": "SEQ",
-        "members": [
-          {
-            "type": "STRING",
-            "value": "\\"
-          },
-          {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "STRING",
-                        "value": "\r"
-                      },
-                      {
-                        "type": "BLANK"
-                      }
-                    ]
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "\n"
-                  }
-                ]
-              },
-              {
-                "type": "STRING",
-                "value": "\u0000"
-              }
-            ]
-          }
-        ]
-      }
+    "_primary_expression": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "unit_expr"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "string"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "boolean"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "parenthesized_expression"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "fielded_constructor"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "sum_constructor"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        }
+      ]
     },
     "number": {
       "type": "PATTERN",
@@ -1216,7 +1225,7 @@
           }
         },
         {
-          "type": "REPEAT",
+          "type": "REPEAT1",
           "content": {
             "type": "SEQ",
             "members": [
@@ -1476,12 +1485,8 @@
               "type": "FIELD",
               "name": "val_field",
               "content": {
-                "type": "FIELD",
-                "name": "name",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "identifier"
-                }
+                "type": "SYMBOL",
+                "name": "identifier"
               }
             }
           ]
@@ -1779,7 +1784,7 @@
             "name": "argument",
             "content": {
               "type": "SYMBOL",
-              "name": "_expression"
+              "name": "_primary_expression"
             }
           }
         ]
@@ -1860,7 +1865,7 @@
             "name": "callee",
             "content": {
               "type": "SYMBOL",
-              "name": "_expression"
+              "name": "_primary_expression"
             }
           },
           {
@@ -1881,7 +1886,7 @@
             "name": "func",
             "content": {
               "type": "SYMBOL",
-              "name": "_expression"
+              "name": "identifier"
             }
           }
         ]
@@ -2079,10 +2084,6 @@
       {
         "type": "STRING",
         "value": "extern"
-      },
-      {
-        "type": "STRING",
-        "value": "in"
       },
       {
         "type": "STRING",
