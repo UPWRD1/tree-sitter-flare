@@ -1,0 +1,106 @@
+===
+pattern tests
+===
+
+Test = {
+    use PointXY
+    use Option
+
+    product_expansion: PointXY =
+        let point = PointXY :: new {x = 3, y = 4} in
+        let {a @ x, b @ y} = point in
+        let new_point = PointXY :: new { x = a, b = y}in
+        new_point
+
+    matching =
+        let opt = Option :: Some product_expansion in
+        match opt
+          as |Some { a @ x, b @ y}| then
+            a
+          as |None| then 0
+        end
+}        
+
+---
+
+(source_file
+  (field_assignment
+    (identifier)
+    (fielded_constructor
+      (use_macro
+        (pattern_variable
+          (identifier)))
+      (use_macro
+        (pattern_variable
+          (identifier)))
+      (field_assignment
+        (identifier)
+        (user_type
+          (identifier))
+        (let_expression
+          (pattern_variable
+            (identifier))
+          (call_expression
+            (prop_access
+              (identifier)
+              (identifier))
+            (fielded_constructor
+              (field_assignment
+                (identifier)
+                (number))
+              (field_assignment
+                (identifier)
+                (number))))
+          (let_expression
+            (pattern_product
+              (pattern_alias
+                (pattern_variable
+                  (identifier))
+                (identifier))
+              (pattern_alias
+                (pattern_variable
+                  (identifier))
+                (identifier)))
+            (identifier)
+            (let_expression
+              (pattern_variable
+                (identifier))
+              (call_expression
+                (prop_access
+                  (identifier)
+                  (identifier))
+                (fielded_constructor
+                  (field_assignment
+                    (identifier)
+                    (identifier))
+                  (field_assignment
+                    (identifier)
+                    (identifier))))
+              (identifier)))))
+      (field_assignment
+        (identifier)
+        (let_expression
+          (pattern_variable
+            (identifier))
+          (call_expression
+            (prop_access
+              (identifier)
+              (identifier))
+            (identifier))
+          (match_expression
+            (identifier)
+            (pattern_variant
+              (identifier)
+              (pattern_product
+                (pattern_alias
+                  (pattern_variable
+                    (identifier))
+                  (identifier))
+                (pattern_alias
+                  (pattern_variable
+                    (identifier))
+                  (identifier))))
+            (identifier)
+            (pattern_variant
+              (identifier))
+            (number)))))))

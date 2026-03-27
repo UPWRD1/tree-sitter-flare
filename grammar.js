@@ -15,6 +15,8 @@ const PREC = {
   property: 22,
   call: 23,
   access: 24,
+
+  macro: 100,
 };
 
 export default grammar({
@@ -84,10 +86,10 @@ export default grammar({
       field('the_type', $._type)
     ),
 
-    use_macro: $ => seq(
+    use_macro: $ => prec(PREC.macro, seq(
       'use',
-      $._expression,
-    ),
+      field('import', $._pattern_path_or_var),
+    )),
 
     extend_macro: $ => seq(
       'extend',
@@ -209,7 +211,7 @@ export default grammar({
       repeat1(seq('.', $.identifier))
     )),
 
-    path_or_id: $ => choice($.path, $.identifier),
+    path_or_id: $ => choice($.identifier, $.path),
 
     let_expression: $ => seq(
       'let',
@@ -326,7 +328,10 @@ export default grammar({
     field_access: $ => prec.left(PREC.access, seq(
       field('object', $._primary_expression),
       '.',
-      field('field', $.identifier)
+      choice(
+        field('field', $.identifier),
+        $.pattern_product
+      )
     )),
 
     prop_qualifier: $ => seq(
@@ -347,17 +352,46 @@ export default grammar({
       ')'
     ),
 
+    
     pattern: $ => choice(
-      $.pattern_tuple,
+      $.pattern_path,
+      $.pattern_product,
       $.pattern_variant,
       $.pattern_variable,
+      $.pattern_alias,
       $.pattern_atom
     ),
 
-    pattern_tuple: $ => seq(
+    _pattern_terminal: $ => choice(
+      $.pattern_variable,
+      $.pattern_product,
+    ),
+
+    _pattern_path_or_var: $ => choice(
+      $.pattern_path,
+      $.pattern_variable,
+    ),
+
+    pattern_path: $ => prec.left(PREC.access, seq(
+      $.pattern,
+      '.',
+      $._pattern_terminal,
+    )),
+
+    pattern_product: $ => seq(
       '{',
-      commaSep($.pattern),
+      flareSep($._pattern_product_elem),
       '}'
+    ),
+
+    _pattern_product_elem: $ => seq(
+      $.pattern,
+    ),
+
+    pattern_alias: $ => seq(
+      $.pattern,
+      '@',
+      $.identifier,
     ),
 
     pattern_variant: $ => prec.right(seq(
@@ -398,7 +432,6 @@ function sep_by(rule, separator) {
     optional(separator)
   ));
 }
-
 
 function forward_sep_by(rule, separator) {
   return repeat1(seq(separator, rule));

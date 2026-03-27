@@ -71,7 +71,7 @@
 (lambda
   parameter: (identifier) @variable.parameter)
 
-; Extern declarations
+; Extern macro
 (extern_macro
   name: (identifier) @function)
 

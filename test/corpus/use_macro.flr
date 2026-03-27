@@ -1,0 +1,61 @@
+====
+use macro
+====
+
+Test = {
+	use Foo
+	use Foo.bar
+	use Foo.{bar, Baz}
+	use Foo.{bar @ foo_bar}
+	use Foo.{bar, FooBaz @ Baz}
+
+	test = 0
+}
+
+---
+
+(source_file
+  (field_assignment
+    (identifier)
+    (fielded_constructor
+      (use_macro
+        (pattern_variable
+          (identifier)))
+      (use_macro
+        (pattern_path
+          (pattern_variable
+            (identifier))
+          (pattern_variable
+            (identifier))))
+      (use_macro
+        (pattern_path
+          (pattern_variable
+            (identifier))
+          (pattern_product
+            (pattern_variable
+              (identifier))
+            (pattern_variable
+              (identifier)))))
+      (use_macro
+        (pattern_path
+          (pattern_variable
+            (identifier))
+          (pattern_product
+            (pattern_alias
+              (pattern_variable
+                (identifier))
+              (identifier)))))
+      (use_macro
+        (pattern_path
+          (pattern_variable
+            (identifier))
+          (pattern_product
+            (pattern_variable
+              (identifier))
+            (pattern_alias
+              (pattern_variable
+                (identifier))
+              (identifier)))))
+      (field_assignment
+        (identifier)
+        (number)))))

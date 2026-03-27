@@ -6,7 +6,10 @@ default:
     test
 
 test: build
-    tree-sitter parse test/corpus/ntest.flr
+    tree-sitter test
+
+testu: build
+    tree-sitter test -u
 
 testp: build
     tree-sitter parse test/corpus/ntest.flr -c
