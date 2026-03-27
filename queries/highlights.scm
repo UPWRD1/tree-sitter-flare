@@ -109,8 +109,8 @@
   arg: (identifier)+ @variable.parameter
 )
 
-(field_assignment
-  val_field: (identifier) @property)
+; (field_assignment
+  ; val_field: (identifier) @property)
 
 (field_access
   field: (identifier) @property)
