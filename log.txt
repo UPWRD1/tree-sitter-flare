@@ -1,0 +1,9 @@
+2026-03-27T09:43:22.358 helix_core::syntax [ERROR] Failed to compile highlights for 'flare': invalid node type "as"
+  --> 5:4
+   |
+ 4 | [
+ 5 |   "as"
+   |    ^^
+ 6 |   "end"
+   |
+
