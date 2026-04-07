@@ -628,7 +628,7 @@
       },
       "name": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "identifier",
@@ -642,16 +642,6 @@
         "types": [
           {
             "type": "_type",
-            "named": true
-          }
-        ]
-      },
-      "val_field": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
             "named": true
           }
         ]

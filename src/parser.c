@@ -13,7 +13,7 @@
 #define ALIAS_COUNT 0
 #define TOKEN_COUNT 54
 #define EXTERNAL_TOKEN_COUNT 0
-#define FIELD_COUNT 32
+#define FIELD_COUNT 31
 #define MAX_ALIAS_SEQUENCE_LENGTH 10
 #define MAX_RESERVED_WORD_SET_SIZE 12
 #define PRODUCTION_ID_COUNT 35
@@ -896,10 +896,9 @@ enum ts_field_identifiers {
   field_spec = 26,
   field_the_type = 27,
   field_type = 28,
-  field_val_field = 29,
-  field_value = 30,
-  field_variant_data = 31,
-  field_variant_name = 32,
+  field_value = 29,
+  field_variant_data = 30,
+  field_variant_name = 31,
 };
 
 static const char * const ts_field_names[] = {
@@ -932,7 +931,6 @@ static const char * const ts_field_names[] = {
   [field_spec] = "spec",
   [field_the_type] = "the_type",
   [field_type] = "type",
-  [field_val_field] = "val_field",
   [field_value] = "value",
   [field_variant_data] = "variant_data",
   [field_variant_name] = "variant_name",
@@ -977,11 +975,11 @@ static const TSMapSlice ts_field_map_slices[PRODUCTION_ID_COUNT] = {
 
 static const TSFieldMapEntry ts_field_map_entries[] = {
   [0] =
-    {field_val_field, 0},
+    {field_name, 0},
     {field_value, 2},
   [2] =
+    {field_name, 0},
     {field_type, 2},
-    {field_val_field, 0},
   [4] =
     {field_parameter, 0},
   [5] =
@@ -1018,8 +1016,8 @@ static const TSFieldMapEntry ts_field_map_entries[] = {
   [26] =
     {field_variant_name, 1},
   [27] =
+    {field_name, 0},
     {field_type, 2},
-    {field_val_field, 0},
     {field_value, 4},
   [30] =
     {field_parameter, 0},

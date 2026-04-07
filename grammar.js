@@ -259,12 +259,10 @@ export default grammar({
     ),
 
     field_assignment: $ => seq(
-      choice(
-        field('function_field', seq(
-          field('name', $.identifier),
-          field('arg', repeat1($.identifier)
-          ))),
-        field('val_field', $.identifier),
+      field('name', $.identifier),
+      optional(
+        field('arg', repeat1($.identifier)
+        ),
       ),
       choice(
         seq(
@@ -352,7 +350,7 @@ export default grammar({
       ')'
     ),
 
-    
+
     pattern: $ => choice(
       $.pattern_path,
       $.pattern_product,
