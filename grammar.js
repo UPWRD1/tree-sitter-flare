@@ -106,7 +106,7 @@ export default grammar({
       '}',
     ),
 
-   _type: $ => choice(
+    _type: $ => choice(
       $.primitive_type,
       $.self_type,
       $.user_type,
@@ -130,11 +130,11 @@ export default grammar({
 
     user_type: $ => seq(
       field('name', choice($.identifier)),
-      field('generics', optional(seq(
+      optional(seq(
         '[',
-        commaSep($._type),
+        field('generics', commaSep($._type)),
         ']'
-      )))
+      ))
     ),
 
     generic_type: $ => seq(

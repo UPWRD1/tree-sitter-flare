@@ -1984,14 +1984,6 @@
             "named": false
           },
           {
-            "type": "[",
-            "named": false
-          },
-          {
-            "type": "]",
-            "named": false
-          },
-          {
             "type": "_type",
             "named": true
           }
