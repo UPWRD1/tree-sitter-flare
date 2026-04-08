@@ -1,7 +1,7 @@
 [package]
 name = "tree-sitter-flare"
 description = "Parser for the Flare language"
-version = "0.1.2"
+version = "0.1.3"
 authors = ["Luke Davis <luke.n.davis.7@gmail.com>"]
 license = "MIT"
 readme = "README.md"

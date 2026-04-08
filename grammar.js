@@ -70,7 +70,6 @@ export default grammar({
       $.extern_macro,
       $.type_macro,
       $.extend_macro,
-      $.return_macro,
     ),
 
     type_macro: $ => seq(

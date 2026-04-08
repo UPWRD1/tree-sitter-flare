@@ -50,29 +50,11 @@
         "named": true
       },
       {
-        "type": "return_macro",
-        "named": true
-      },
-      {
         "type": "type_macro",
         "named": true
       },
       {
         "type": "use_macro",
-        "named": true
-      }
-    ]
-  },
-  {
-    "type": "path_or_id",
-    "named": true,
-    "subtypes": [
-      {
-        "type": "identifier",
-        "named": true
-      },
-      {
-        "type": "path",
         "named": true
       }
     ]
@@ -1526,21 +1508,6 @@
     }
   },
   {
-    "type": "path",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "identifier",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "pattern_alias",
     "named": true,
     "fields": {},
@@ -1785,54 +1752,6 @@
     }
   },
   {
-    "type": "return_macro",
-    "named": true,
-    "fields": {
-      "expr": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "boolean",
-            "named": true
-          },
-          {
-            "type": "field_access",
-            "named": true
-          },
-          {
-            "type": "fielded_constructor",
-            "named": true
-          },
-          {
-            "type": "identifier",
-            "named": true
-          },
-          {
-            "type": "number",
-            "named": true
-          },
-          {
-            "type": "parenthesized_expression",
-            "named": true
-          },
-          {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "sum_constructor",
-            "named": true
-          },
-          {
-            "type": "unit_expr",
-            "named": true
-          }
-        ]
-      }
-    }
-  },
-  {
     "type": "source_file",
     "named": true,
     "root": true,
@@ -2055,20 +1974,39 @@
   {
     "type": "user_type",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "_type",
-          "named": true
-        },
-        {
-          "type": "path_or_id",
-          "named": true
-        }
-      ]
+    "fields": {
+      "generics": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": ",",
+            "named": false
+          },
+          {
+            "type": "[",
+            "named": false
+          },
+          {
+            "type": "]",
+            "named": false
+          },
+          {
+            "type": "_type",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -2240,10 +2178,6 @@
   {
     "type": "number",
     "named": true
-  },
-  {
-    "type": "return",
-    "named": false
   },
   {
     "type": "self_type",
