@@ -40,7 +40,6 @@ export default grammar({
       'in',
       'let',
       'match',
-      'return',
       'then',
       'type',
       'use',
@@ -108,12 +107,7 @@ export default grammar({
       '}',
     ),
 
-    return_macro: $ => seq(
-      'return',
-      field('expr', $._primary_expression)
-    ),
-
-    _type: $ => choice(
+   _type: $ => choice(
       $.primitive_type,
       $.self_type,
       $.user_type,
