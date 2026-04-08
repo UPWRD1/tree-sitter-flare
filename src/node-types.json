@@ -50,6 +50,10 @@
         "named": true
       },
       {
+        "type": "return_macro",
+        "named": true
+      },
+      {
         "type": "type_macro",
         "named": true
       },
@@ -216,7 +220,7 @@
     "type": "call_expression",
     "named": true,
     "fields": {
-      "argument": {
+      "expr": {
         "multiple": false,
         "required": true,
         "types": [
@@ -258,7 +262,7 @@
           }
         ]
       },
-      "function": {
+      "func": {
         "multiple": false,
         "required": true,
         "types": [
@@ -548,17 +552,7 @@
     "type": "field_access",
     "named": true,
     "fields": {
-      "field": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "object": {
+      "expr": {
         "multiple": false,
         "required": true,
         "types": [
@@ -599,6 +593,16 @@
             "named": true
           }
         ]
+      },
+      "field": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
       }
     },
     "children": {
@@ -626,27 +630,7 @@
           }
         ]
       },
-      "name": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      },
-      "type": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "_type",
-            "named": true
-          }
-        ]
-      },
-      "value": {
+      "expr": {
         "multiple": false,
         "required": false,
         "types": [
@@ -715,26 +699,53 @@
             "named": true
           }
         ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "_type",
+            "named": true
+          }
+        ]
       }
     }
   },
   {
     "type": "fielded_constructor",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "field_assignment",
-          "named": true
-        },
-        {
-          "type": "macro_invoke",
-          "named": true
-        }
-      ]
+    "fields": {
+      "assignment": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "field_assignment",
+            "named": true
+          }
+        ]
+      },
+      "macro": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "macro_invoke",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -998,7 +1009,17 @@
     "type": "lambda",
     "named": true,
     "fields": {
-      "body": {
+      "arg": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "expr": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1064,16 +1085,6 @@
           },
           {
             "type": "unit_expr",
-            "named": true
-          }
-        ]
-      },
-      "parameter": {
-        "multiple": true,
-        "required": true,
-        "types": [
-          {
-            "type": "identifier",
             "named": true
           }
         ]
@@ -1240,7 +1251,7 @@
     "type": "match_expression",
     "named": true,
     "fields": {
-      "body": {
+      "expr": {
         "multiple": true,
         "required": true,
         "types": [
@@ -1647,7 +1658,7 @@
     "type": "product_type",
     "named": true,
     "fields": {
-      "field_name": {
+      "name": {
         "multiple": true,
         "required": false,
         "types": [
@@ -1657,7 +1668,7 @@
           }
         ]
       },
-      "field_ty": {
+      "type": {
         "multiple": true,
         "required": false,
         "types": [
@@ -1715,7 +1726,7 @@
           }
         ]
       },
-      "func": {
+      "name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1768,6 +1779,54 @@
           {
             "type": ":",
             "named": false
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "return_macro",
+    "named": true,
+    "fields": {
+      "expr": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "field_access",
+            "named": true
+          },
+          {
+            "type": "fielded_constructor",
+            "named": true
+          },
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          },
+          {
+            "type": "parenthesized_expression",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          },
+          {
+            "type": "sum_constructor",
+            "named": true
+          },
+          {
+            "type": "unit_expr",
+            "named": true
           }
         ]
       }
@@ -1920,7 +1979,7 @@
     "type": "sum_type",
     "named": true,
     "fields": {
-      "variant_data": {
+      "data": {
         "multiple": true,
         "required": false,
         "types": [
@@ -1930,7 +1989,7 @@
           }
         ]
       },
-      "variant_name": {
+      "name": {
         "multiple": true,
         "required": false,
         "types": [
@@ -2181,6 +2240,10 @@
   {
     "type": "number",
     "named": true
+  },
+  {
+    "type": "return",
+    "named": false
   },
   {
     "type": "self_type",
