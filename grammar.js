@@ -70,6 +70,7 @@ export default grammar({
       $.extern_macro,
       $.type_macro,
       $.extend_macro,
+      $.return_macro,
     ),
 
     type_macro: $ => seq(
@@ -106,7 +107,7 @@ export default grammar({
       '}',
     ),
 
-    _type: $ => choice(
+   _type: $ => choice(
       $.primitive_type,
       $.self_type,
       $.user_type,
@@ -129,12 +130,12 @@ export default grammar({
     self_type: _ => 'self',
 
     user_type: $ => seq(
-      choice($.path_or_id),
-      optional(seq(
+      field('name', choice($.identifier)),
+      field('generics', optional(seq(
         '[',
         commaSep($._type),
         ']'
-      ))
+      )))
     ),
 
     generic_type: $ => seq(
@@ -151,9 +152,9 @@ export default grammar({
     product_type: $ => prec.right(seq(
       '{',
       flareSep(seq(
-        field("field_name", $.identifier),
+        field("name", $.identifier),
         ':',
-        field("field_ty", $._type)
+        field("type", $._type)
       )),
       '}'
     )),
@@ -162,8 +163,8 @@ export default grammar({
       '|',
       flareSep(
         seq(
-          field("variant_name", $.identifier),
-          field("variant_data", optional($._type))
+          field("name", $.identifier),
+          field("data", optional($._type))
         )
       ),
       '|'
@@ -237,23 +238,23 @@ export default grammar({
       forward_sep_by(seq(
         field('pattern', $.pattern),
         'then',
-        field('body', $._expression),
+        field('expr', $._expression),
       ), 'as',),
       'end'
     ),
 
     lambda: $ => prec.right(seq(
       'fn',
-      repeat1(field('parameter', $.identifier)),
+      repeat1(field('arg', $.identifier)),
       '=>',
-      field('body', $._expression)
+      field('expr', $._expression)
     )),
 
     fielded_constructor: $ => seq(
       '{',
       flareSep(choice(
-        $.macro_invoke,
-        $.field_assignment,
+        field('macro', $.macro_invoke),
+        field('assignment', $.field_assignment),
       )),
       '}'
     ),
@@ -267,14 +268,14 @@ export default grammar({
       choice(
         seq(
           '=',
-          field('value', $._expression)
+          field('expr', $._expression)
         ),
         seq(
           ':',
           field('type', $._type),
           optional(seq(
             '=',
-            field('value', $._expression)
+            field('expr', $._expression)
           )),
         ),
       )
@@ -319,12 +320,12 @@ export default grammar({
     ),
 
     call_expression: $ => prec.left(PREC.call, seq(
-      field('function', $._expression),
-      field('argument', $._primary_expression)
+      field('func', $._expression),
+      field('expr', $._primary_expression)
     )),
 
     field_access: $ => prec.left(PREC.access, seq(
-      field('object', $._primary_expression),
+      field('expr', $._primary_expression),
       '.',
       choice(
         field('field', $.identifier),
@@ -341,7 +342,7 @@ export default grammar({
     prop_access: $ => prec.left(PREC.property, seq(
       field('callee', $._primary_expression),
       choice('::', $.prop_qualifier),
-      field('func', $.identifier),
+      field('name', $.identifier),
     )),
 
     parenthesized_expression: $ => seq(
@@ -349,7 +350,6 @@ export default grammar({
       $._expression,
       ')'
     ),
-
 
     pattern: $ => choice(
       $.pattern_path,
