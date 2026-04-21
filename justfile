@@ -12,12 +12,16 @@ testu: build
     tree-sitter test -u
 
 testp: build
-    tree-sitter parse test/corpus/ntest.flr -c
+    tree-sitter parse --test-number=3 -c
 
 show: build
     tree-sitter highlight --query-paths ./queries/highlights.scm --paths paths.txt
 show_hx:
     tree-sitter highlight --query-paths ~/.config/helix/runtime/queries/flare/highlights.scm --paths paths.txt
+
+play: build
+    tree-sitter build --wasm
+    tree-sitter playground
     
 update_hx:
     if git_status; then \

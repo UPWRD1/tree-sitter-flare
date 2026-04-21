@@ -8,8 +8,8 @@ Main = {
 
 	Fallible[?T] = type {
 		extract: self -> Option[?T]
-	}
-
+    }
+    
     extend Fallible[?T] = {
         unwrap: self -> ?T = fn i =>
 		    match i :: extract 
@@ -29,7 +29,7 @@ Main = {
 		        as | None   | then Sys.panic msg
 			end
     }
-
+    
 	Point = type {
 		x : num
 	    y : num
@@ -41,15 +41,14 @@ Main = {
 		extract self = self
 	}
 
-	Result[?T ?E] = type | Ok ?T, Err ?E |
+	Result[?T, ?E] = type | Ok ?T, Err ?E |
 
 	extend Result[?T, ?E] :: Fallible[?T] = {
 	    extract self =
 			match self
 				as | Ok x  | then Some x
 		        as | Err _ | then None
-			end 
-				
+			end
 	}
   
 	safe_slope: Point -> Point -> Option[num] = fn p1 p2 => {
@@ -59,7 +58,8 @@ Main = {
         	as _ then {
 				numerator = p2.y - p1.x
 				return numerator / denominator
-        }
+			}
+			end
     }
   
 	main: num = {
@@ -73,262 +73,274 @@ Main = {
 
 (source_file
   (field_assignment
-    val_field: (identifier)
-    value: (fielded_constructor
+    (identifier)
+    (fielded_constructor
       (use_macro
-        import: (pattern_variable
+        (pattern_variable
           (identifier)))
-      (type_macro
-        name: (user_type
-          (identifier)
-          (generic_type
-            name: (identifier)))
-        the_type: (product_type
-          field_name: (identifier)
-          field_ty: (arrow_type
-            parameter: (self_type)
-            return: (user_type
-              (identifier)
-              (generic_type
-                name: (identifier))))))
-      (extend_macro
-        implementor: (user_type
-          (identifier)
-          (generic_type
-            name: (identifier)))
-        (field_assignment
-          name: (identifier)
-          arg: (identifier)
-          type: (arrow_type
-            parameter: (self_type)
-            return: (generic_type
-              name: (identifier)))
-          value: (match_expression
-            value: (prop_access
-              callee: (identifier)
-              func: (identifier))
-            pattern: (pattern_variant
-              variant_name: (identifier)
-              (pattern_variable
-                (identifier)))
-            body: (identifier)
-            pattern: (pattern_variant
-              variant_name: (identifier))
-            body: (call_expression
-              function: (field_access
-                object: (identifier)
-                field: (identifier))
-              argument: (string))))
-        (field_assignment
-          name: (identifier)
-          arg: (identifier)
-          arg: (identifier)
-          type: (arrow_type
-            parameter: (self_type)
-            return: (arrow_type
-              parameter: (generic_type
-                name: (identifier))
-              return: (generic_type
-                name: (identifier))))
-          value: (match_expression
-            value: (prop_access
-              callee: (identifier)
-              func: (identifier))
-            pattern: (pattern_variant
-              variant_name: (identifier)
-              (pattern_variable
-                (identifier)))
-            body: (identifier)
-            pattern: (pattern_variant
-              variant_name: (identifier))
-            body: (identifier)))
-        (field_assignment
-          name: (identifier)
-          arg: (identifier)
-          arg: (identifier)
-          type: (arrow_type
-            parameter: (self_type)
-            return: (arrow_type
-              parameter: (primitive_type)
-              return: (generic_type
-                name: (identifier))))
-          value: (match_expression
-            value: (prop_access
-              callee: (identifier)
-              func: (identifier))
-            pattern: (pattern_variant
-              variant_name: (identifier)
-              (pattern_variable
-                (identifier)))
-            body: (identifier)
-            pattern: (pattern_variant
-              variant_name: (identifier))
-            body: (call_expression
-              function: (field_access
-                object: (identifier)
-                field: (identifier))
-              argument: (identifier)))))
-      (type_macro
-        name: (user_type
-          (identifier))
-        the_type: (product_type
-          field_name: (identifier)
-          field_ty: (primitive_type)
-          field_name: (identifier)
-          field_ty: (primitive_type)))
-      (type_macro
-        name: (user_type
-          (identifier)
-          (generic_type
-            name: (identifier)))
-        the_type: (sum_type
-          variant_name: (identifier)
-          variant_data: (generic_type
-            name: (identifier))
-          variant_name: (identifier)))
-      (extend_macro
-        implementor: (user_type
-          (identifier)
-          (generic_type
-            name: (identifier)))
-        spec: (user_type
-          (identifier)
-          (generic_type
-            name: (identifier)))
-        (field_assignment
-          name: (identifier)
-          arg: (identifier)
-          value: (identifier)))
-      (type_macro
-        name: (user_type
-          (identifier)
-          (generic_type
-            name: (identifier))
-          (generic_type
-            name: (identifier)))
-        the_type: (sum_type
-          variant_name: (identifier)
-          variant_data: (generic_type
-            name: (identifier))
-          variant_name: (identifier)
-          variant_data: (generic_type
-            name: (identifier))))
-      (extend_macro
-        implementor: (user_type
-          (identifier)
-          (generic_type
-            name: (identifier))
-          (generic_type
-            name: (identifier)))
-        spec: (user_type
-          (identifier)
-          (generic_type
-            name: (identifier)))
-        (field_assignment
-          name: (identifier)
-          arg: (identifier)
-          value: (match_expression
-            value: (identifier)
-            pattern: (pattern_variant
-              variant_name: (identifier)
-              (pattern_variable
-                (identifier)))
-            body: (call_expression
-              function: (identifier)
-              argument: (identifier))
-            pattern: (pattern_variant
-              variant_name: (identifier)
-              (pattern_variable
-                (identifier)))
-            body: (identifier))))
       (field_assignment
-        name: (identifier)
-        arg: (identifier)
-        arg: (identifier)
-        type: (arrow_type
-          parameter: (user_type
-            (identifier))
-          return: (arrow_type
-            parameter: (user_type
-              (identifier))
-            return: (user_type
-              (identifier)
-              (primitive_type))))
-        value: (let_expression
-          pattern: (pattern_variable
-            (identifier))
-          value: (binary_expression
-            (sub_expression
-              (field_access
-                object: (identifier)
-                field: (identifier))
-              (field_access
-                object: (identifier)
-                field: (identifier))))
-          body: (if_expression
-            condition: (binary_expression
-              (cmp_expression
-                left: (identifier)
-                operator: (comparison_operator)
-                right: (number)))
-            consequence: (identifier)
-            alternative: (let_expression
-              pattern: (pattern_variable
+        (identifier)
+        (generic_brackets
+          (generic_type
+            (identifier)))
+        (type_expression
+          (product_type
+            (identifier)
+            (arrow_type
+              (self_type)
+              (user_type
+                (identifier)
+                (generic_brackets
+                  (generic_type
+                    (identifier))))))))
+      (extend_macro
+        (user_type
+          (identifier)
+          (generic_brackets
+            (generic_type
+              (identifier))))
+        (field_assignment
+          (identifier)
+          (arrow_type
+            (self_type)
+            (generic_type
+              (identifier)))
+          (lambda
+            (identifier)
+            (match_expression
+              (prop_access
+                (identifier)
                 (identifier))
-              value: (binary_expression
-                (sub_expression
-                  (field_access
-                    object: (identifier)
-                    field: (identifier))
-                  (field_access
-                    object: (identifier)
-                    field: (identifier))))
-              body: (binary_expression
-                (div_expression
+              (pattern_variant
+                (identifier)
+                (pattern_variable
+                  (identifier)))
+              (identifier)
+              (pattern_variant
+                (identifier))
+              (call_expression
+                (field_access
                   (identifier)
-                  (identifier)))))))
-      (field_assignment
-        val_field: (identifier)
-        type: (primitive_type)
-        value: (let_expression
-          pattern: (pattern_variable
-            (identifier))
-          value: (fielded_constructor
-            (field_assignment
-              val_field: (identifier)
-              value: (number))
-            (field_assignment
-              val_field: (identifier)
-              value: (number)))
-          body: (let_expression
-            pattern: (pattern_variable
-              (identifier))
-            value: (fielded_constructor
-              (field_assignment
-                val_field: (identifier)
-                value: (number))
-              (field_assignment
-                val_field: (identifier)
-                value: (number)))
-            body: (let_expression
-              pattern: (pattern_variable
+                  (identifier))
+                (string)))))
+        (field_assignment
+          (identifier)
+          (arrow_type
+            (self_type)
+            (arrow_type
+              (generic_type
                 (identifier))
-              value: (fielded_constructor
-                (field_assignment
-                  val_field: (identifier)
-                  value: (identifier))
-                (field_assignment
-                  val_field: (identifier)
-                  value: (unit_expr)))
-              body: (call_expression
-                function: (prop_access
-                  callee: (parenthesized_expression
+              (generic_type
+                (identifier))))
+          (lambda
+            (identifier)
+            (identifier)
+            (match_expression
+              (prop_access
+                (identifier)
+                (identifier))
+              (pattern_variant
+                (identifier)
+                (pattern_variable
+                  (identifier)))
+              (identifier)
+              (pattern_variant
+                (identifier))
+              (identifier))))
+        (field_assignment
+          (identifier)
+          (arrow_type
+            (self_type)
+            (arrow_type
+              (primitive_type)
+              (generic_type
+                (identifier))))
+          (lambda
+            (identifier)
+            (identifier)
+            (match_expression
+              (prop_access
+                (identifier)
+                (identifier))
+              (pattern_variant
+                (identifier)
+                (pattern_variable
+                  (identifier)))
+              (identifier)
+              (pattern_variant
+                (identifier))
+              (call_expression
+                (field_access
+                  (identifier)
+                  (identifier))
+                (identifier))))))
+      (field_assignment
+        (identifier)
+        (type_expression
+          (product_type
+            (identifier)
+            (primitive_type)
+            (identifier)
+            (primitive_type))))
+      (field_assignment
+        (identifier)
+        (generic_brackets
+          (generic_type
+            (identifier)))
+        (type_expression
+          (sum_type
+            (identifier)
+            (generic_type
+              (identifier))
+            (identifier))))
+      (extend_macro
+        (user_type
+          (identifier)
+          (generic_brackets
+            (generic_type
+              (identifier))))
+        (user_type
+          (identifier)
+          (generic_brackets
+            (generic_type
+              (identifier))))
+        (field_assignment
+          (identifier)
+          (identifier)
+          (identifier)))
+      (field_assignment
+        (identifier)
+        (generic_brackets
+          (generic_type
+            (identifier))
+          (generic_type
+            (identifier)))
+        (type_expression
+          (sum_type
+            (identifier)
+            (generic_type
+              (identifier))
+            (identifier)
+            (generic_type
+              (identifier)))))
+      (extend_macro
+        (user_type
+          (identifier)
+          (generic_brackets
+            (generic_type
+              (identifier))
+            (generic_type
+              (identifier))))
+        (user_type
+          (identifier)
+          (generic_brackets
+            (generic_type
+              (identifier))))
+        (field_assignment
+          (identifier)
+          (identifier)
+          (match_expression
+            (identifier)
+            (pattern_variant
+              (identifier)
+              (pattern_variable
+                (identifier)))
+            (call_expression
+              (identifier)
+              (identifier))
+            (pattern_variant
+              (identifier)
+              (pattern_variable
+                (identifier)))
+            (identifier))))
+      (field_assignment
+        (identifier)
+        (arrow_type
+          (user_type
+            (identifier))
+          (arrow_type
+            (user_type
+              (identifier))
+            (user_type
+              (identifier)
+              (generic_brackets
+                (primitive_type)))))
+        (lambda
+          (identifier)
+          (identifier)
+          (fielded_constructor
+            (field_assignment
+              (identifier)
+              (binary_expression
+                (field_access
+                  (identifier)
+                  (identifier))
+                (field_access
+                  (identifier)
+                  (identifier))))
+            (return_macro
+              (match_expression
+                (identifier)
+                (pattern_atom
+                  (number))
+                (identifier)
+                (pattern_variable
+                  (identifier))
+                (fielded_constructor
+                  (field_assignment
+                    (identifier)
+                    (binary_expression
+                      (field_access
+                        (identifier)
+                        (identifier))
+                      (field_access
+                        (identifier)
+                        (identifier))))
+                  (return_macro
+                    (binary_expression
+                      (identifier)
+                      (identifier)))))))))
+      (field_assignment
+        (identifier)
+        (primitive_type)
+        (fielded_constructor
+          (field_assignment
+            (identifier)
+            (fielded_constructor
+              (field_assignment
+                (identifier)
+                (number))
+              (field_assignment
+                (identifier)
+                (number))))
+          (field_assignment
+            (identifier)
+            (fielded_constructor
+              (field_assignment
+                (identifier)
+                (number))
+              (field_assignment
+                (identifier)
+                (number))))
+          (field_assignment
+            (identifier)
+            (fielded_constructor
+              (field_assignment
+                (identifier)
+                (identifier))
+              (field_assignment
+                (identifier)
+                (unit_expr))))
+          (return_macro
+            (call_expression
+              (prop_access
+                (parenthesized_expression
+                  (call_expression
                     (call_expression
-                      function: (call_expression
-                        function: (identifier)
-                        argument: (identifier))
-                      argument: (field_access
-                        object: (identifier)
-                        field: (identifier))))
-                  func: (identifier))
-                argument: (number)))))))))
+                      (identifier)
+                      (identifier))
+                    (field_access
+                      (identifier)
+                      (identifier))))
+                (identifier))
+              (number))))))))

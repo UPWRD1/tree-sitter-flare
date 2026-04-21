@@ -305,6 +305,10 @@
             "named": true
           },
           {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "fielded_constructor",
             "named": true
           },
@@ -526,6 +530,10 @@
             "named": true
           },
           {
+            "type": "field_access",
+            "named": true
+          },
+          {
             "type": "fielded_constructor",
             "named": true
           },
@@ -593,7 +601,7 @@
       },
       "expr": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "binary_expression",
@@ -665,6 +673,16 @@
           }
         ]
       },
+      "generics": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "generic_brackets",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -685,16 +703,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "generic_brackets",
-          "named": true
-        }
-      ]
     }
   },
   {
@@ -1219,6 +1227,10 @@
         "types": [
           {
             "type": "boolean",
+            "named": true
+          },
+          {
+            "type": "field_access",
             "named": true
           },
           {

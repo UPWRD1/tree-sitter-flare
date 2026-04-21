@@ -1,4 +1,4 @@
 Test = {
 	one: num = 1
-	two: num
+	two = type num
 }

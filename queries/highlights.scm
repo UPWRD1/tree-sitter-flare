@@ -8,7 +8,6 @@
   "extern"
   "fn"
   "match"
-  "pub"
   "return"
   "then"
   "type"
@@ -33,7 +32,7 @@
   "*"
   "/"
   "."
-  
+
 ] @operator
 
 ; Delimiters
@@ -74,8 +73,8 @@
 (arrow_type) @type
 
 (product_type
-  name :(identifier) @property
-  type :(_type) @type
+  name:(identifier) @property
+  type:(_type) @type
 )
 
 (sum_type
@@ -86,14 +85,23 @@
   (identifier) @type.enum.variant)
 
 ; Field access and assignments
-  
+
 (field_assignment
   name: (identifier) @function
   arg: (identifier)+ @variable.parameter
 )
 
+(field_assignment
+  name: (identifier) @type
+  expr: (type_expression)
+)
+
+(field_assignment
+  name: (identifier) @property)
+
 (field_access
   field: (identifier) @property)
+
 
 ; Function calls
 (call_expression

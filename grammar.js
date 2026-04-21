@@ -117,7 +117,7 @@ export default grammar({
     self_type: _ => 'self',
 
     user_type: $ => seq(
-      field('name', choice($.identifier)),
+      field('name', $.identifier),
       optional($.generic_brackets),
     ),
 
@@ -171,9 +171,8 @@ export default grammar({
       $.lambda,
       $.prop_access,
       $.binary_expression,
-      $.call_expression,
-      $.field_access,
       $._atom,
+      $.call_expression,
     ),
 
     _atom: $ => choice(
@@ -184,6 +183,7 @@ export default grammar({
       $.parenthesized_expression,
       $.fielded_constructor,
       $.sum_constructor,
+      $.field_access,
       $.identifier,
     ),
 
@@ -222,7 +222,7 @@ export default grammar({
       'extern',
       $._mod_expr,
     ),
-   
+
     match_expression: $ => seq(
       'match',
       field('value', $._expression),
@@ -252,25 +252,16 @@ export default grammar({
 
     field_assignment: $ => seq(
       field('name', $.identifier),
-      optional($.generic_brackets),
+      optional(field('generics', $.generic_brackets)),
       optional(
-        field('arg', repeat1($.identifier)
-        ),
+        field('arg', repeat1($.identifier)),
       ),
-      choice(
-        seq(
-          '=',
-          field('expr', $._mod_expr)
-        ),
-        seq(
-          ':',
-          field('type', $._type),
-          optional(seq(
-            '=',
-            field('expr', $._mod_expr)
-          )),
-        ),
-      )
+      optional(seq(
+        ':',
+        field('type', $._type),
+      )),
+      '=',
+      field('expr', $._mod_expr)
     ),
 
     sum_constructor: $ => prec.right(seq(
@@ -300,7 +291,7 @@ export default grammar({
         ))
       )
     ),
-       
+
     call_expression: $ => prec.left(PREC.call, seq(
       field('func', $._expression),
       field('expr', $._atom)

@@ -2,4 +2,4 @@
 
 ; (match_expression) @local.scope
 
-(let_expression pattern: (pattern) @local.definition)
+(field_assignment name: (identifier) @local.definition)
