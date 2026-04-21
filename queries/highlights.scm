@@ -8,6 +8,7 @@
   "extern"
   "fn"
   "match"
+  "pub"
   "return"
   "then"
   "type"
@@ -101,7 +102,6 @@
 
 (field_access
   field: (identifier) @property)
-
 
 ; Function calls
 (call_expression

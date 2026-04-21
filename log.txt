@@ -1,9 +1,18 @@
-2026-03-27T09:43:22.358 helix_core::syntax [ERROR] Failed to compile highlights for 'flare': invalid node type "as"
-  --> 5:4
-   |
- 4 | [
- 5 |   "as"
-   |    ^^
- 6 |   "end"
-   |
+2026-04-21T11:47:18.382 helix_core::syntax [ERROR] Failed to compile highlights for 'flare': invalid node type "pub"
+  --> 11:4
+    |
+ 10 |   "match"
+ 11 |   "pub"
+    |    ^^^
+ 12 |   "return"
+    |
+
+2026-04-21T11:47:41.653 helix_core::syntax [ERROR] Failed to compile highlights for 'flare': invalid node type "return"
+  --> 12:4
+    |
+ 11 |   ; "pub"
+ 12 |   "return"
+    |    ^^^^^^
+ 13 |   "then"
+    |
 
