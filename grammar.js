@@ -34,12 +34,10 @@ export default grammar({
       'as',
       'end',
       'extern',
-      'else',
       'fn',
-      'if',
-      'in',
-      'let',
       'match',
+      'pub',
+      'return',
       'then',
       'type',
       'use',
@@ -67,23 +65,8 @@ export default grammar({
 
     macro_invoke: $ => choice(
       $.use_macro,
-      $.extern_macro,
-      $.type_macro,
       $.extend_macro,
-    ),
-
-    type_macro: $ => seq(
-      'type',
-      field('name', $.user_type),
-      '=',
-      field('the_type', $._type)
-    ),
-
-    extern_macro: $ => seq(
-      'extern',
-      field('name', $.identifier),
-      ':',
-      field('the_type', $._type)
+      $.return_macro,
     ),
 
     use_macro: $ => prec(PREC.macro, seq(
@@ -104,6 +87,11 @@ export default grammar({
       '{',
       flareSep($.field_assignment),
       '}',
+    ),
+
+    return_macro: $ => seq(
+      'return',
+      $._mod_expr,
     ),
 
     _type: $ => choice(
@@ -130,11 +118,13 @@ export default grammar({
 
     user_type: $ => seq(
       field('name', choice($.identifier)),
-      optional(seq(
-        '[',
-        field('generics', commaSep($._type)),
-        ']'
-      ))
+      optional($.generic_brackets),
+    ),
+
+    generic_brackets: $ => seq(
+      '[',
+      field('generics', commaSep($._type)),
+      ']'
     ),
 
     generic_type: $ => seq(
@@ -169,18 +159,24 @@ export default grammar({
       '|'
     )),
 
+    _mod_expr: $ => choice(
+      $.type_expression,
+      $.pub_expression,
+      $.extern_expression,
+      $._expression,
+    ),
+
     _expression: $ => choice(
-      $.let_expression,
-      $.if_expression,
       $.match_expression,
       $.lambda,
       $.prop_access,
       $.binary_expression,
-      $._primary_expression,
       $.call_expression,
+      $.field_access,
+      $._atom,
     ),
 
-    _primary_expression: $ => choice(
+    _atom: $ => choice(
       $.unit_expr,
       $.number,
       $.string,
@@ -188,7 +184,6 @@ export default grammar({
       $.parenthesized_expression,
       $.fielded_constructor,
       $.sum_constructor,
-      $.field_access,
       $.identifier,
     ),
 
@@ -213,24 +208,21 @@ export default grammar({
 
     path_or_id: $ => choice($.identifier, $.path),
 
-    let_expression: $ => seq(
-      'let',
-      field('pattern', $.pattern),
-      '=',
-      field('value', $._expression),
-      'in',
-      field('body', $._expression)
+    type_expression: $ => seq(
+      'type',
+      $._type
     ),
 
-    if_expression: $ => seq(
-      'if',
-      field('condition', $._expression),
-      'then',
-      field('consequence', $._expression),
-      'else',
-      field('alternative', $._expression)
+    pub_expression: $ => seq(
+      'pub',
+      $._mod_expr,
     ),
 
+    extern_expression: $ => seq(
+      'extern',
+      $._mod_expr,
+    ),
+   
     match_expression: $ => seq(
       'match',
       field('value', $._expression),
@@ -260,6 +252,7 @@ export default grammar({
 
     field_assignment: $ => seq(
       field('name', $.identifier),
+      optional($.generic_brackets),
       optional(
         field('arg', repeat1($.identifier)
         ),
@@ -267,14 +260,14 @@ export default grammar({
       choice(
         seq(
           '=',
-          field('expr', $._expression)
+          field('expr', $._mod_expr)
         ),
         seq(
           ':',
           field('type', $._type),
           optional(seq(
             '=',
-            field('expr', $._expression)
+            field('expr', $._mod_expr)
           )),
         ),
       )
@@ -288,43 +281,33 @@ export default grammar({
     )),
 
     binary_expression: $ => choice(
-      $.mul_expression,
-      $.div_expression,
-      $.add_expression,
-      $.sub_expression,
-      $.cmp_expression,
+      ...[
+        ['*', PREC.mul],
+        ['/', PREC.mul],
+        ['+', PREC.add],
+        ['-', PREC.add],
+        ['==', PREC.compare],
+        ['!=', PREC.compare],
+        ['<', PREC.compare],
+        ['<=', PREC.compare],
+        ['>', PREC.compare],
+        ['>=', PREC.compare],
+      ].map(([op, the_prec]) =>
+        prec.left(the_prec, seq(
+          field('left', $._expression),
+          field('op', op),
+          field('right', $._expression)
+        ))
+      )
     ),
-
-    mul_expression: $ => prec.left(PREC.mul, seq($._primary_expression, '*', $._primary_expression)),
-
-    div_expression: $ => prec.left(PREC.mul, seq($._primary_expression, '/', $._primary_expression)),
-
-    add_expression: $ => prec.left(PREC.add, seq($._primary_expression, '+', $._primary_expression)),
-
-    sub_expression: $ => prec.left(PREC.add, seq($._primary_expression, '-', $._primary_expression)),
-
-    cmp_expression: $ => prec.left(PREC.compare, seq(
-      field('left', $._primary_expression),
-      field('operator', $.comparison_operator),
-      field('right', $._primary_expression)
-    )),
-
-    comparison_operator: _$ => choice(
-      '==',
-      '!=',
-      '<',
-      '<=',
-      '>',
-      '>='
-    ),
-
+       
     call_expression: $ => prec.left(PREC.call, seq(
       field('func', $._expression),
-      field('expr', $._primary_expression)
+      field('expr', $._atom)
     )),
 
     field_access: $ => prec.left(PREC.access, seq(
-      field('expr', $._primary_expression),
+      field('expr', $._atom),
       '.',
       choice(
         field('field', $.identifier),
@@ -339,7 +322,7 @@ export default grammar({
     ),
 
     prop_access: $ => prec.left(PREC.property, seq(
-      field('callee', $._primary_expression),
+      field('callee', $._atom),
       choice('::', $.prop_qualifier),
       field('name', $.identifier),
     )),

@@ -6,12 +6,10 @@
   "end"
   "extend"
   "extern"
-  "else"
   "fn"
-  "if"
-  "in"
-  "let"
   "match"
+  "pub"
+  "return"
   "then"
   "type"
   "use"
@@ -37,9 +35,6 @@
   "."
   
 ] @operator
-
-; Comparison operators
-(comparison_operator) @operator
 
 ; Delimiters
 [
@@ -69,15 +64,7 @@
 
 ; Lambda parameters
 (lambda
-  parameter: (identifier) @variable.parameter)
-
-; Extern macro
-(extern_macro
-  name: (identifier) @function)
-
-; Types
-(user_type
-  (path) @type)
+  arg: (identifier) @variable.parameter)
 
 (user_type
   (identifier) @type)
@@ -87,16 +74,12 @@
 (arrow_type) @type
 
 (product_type
-  field_name:(identifier) @property
-  field_ty :(_type) @type
+  name :(identifier) @property
+  type :(_type) @type
 )
 
 (sum_type
-  variant_name: (identifier) @type.enum.variant)
-
-; Type definitions
-(type_macro
-  name: (user_type) @type )
+  name: (identifier) @type.enum.variant)
 
 ; Pattern matching
 (pattern_variant
@@ -109,16 +92,9 @@
   arg: (identifier)+ @variable.parameter
 )
 
-(field_assignment
-  val_field: (identifier) @property)
-
 (field_access
   field: (identifier) @property)
 
 ; Function calls
 (call_expression
-  function: (identifier) @function)
-
-; Path components
-(path
-  (identifier) @namespace)
+  func: (identifier) @function)

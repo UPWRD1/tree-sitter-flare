@@ -1,45 +1,47 @@
 ==================
 Complicated example
 ==================
+
+
 Main = {
 	use Sys
 
-	type Fallible[?T] = {
-		extract : self -> Option[?T]
+	Fallible[?T] = type {
+		extract: self -> Option[?T]
 	}
 
     extend Fallible[?T] = {
-        unwrap i : self -> ?T =
+        unwrap: self -> ?T = fn i =>
 		    match i :: extract 
 			    as | Some x | then x
 		        as | None   | then Sys.panic "unwrap failed"
 			end
 
-	    unwrap_or i alternative : self -> ?T -> ?T =
+	    unwrap_or: self -> ?T -> ?T = fn i alternative =>
 		    match i :: extract
 			    as | Some x | then x
-		        as | None    | then alternative
+		        as | None   | then alternative
 			end
 
-	    expect i msg : self -> str -> ?T =
+	    expect: self -> str -> ?T = fn i alternative =>
 		    match i :: extract
 		        as | Some x | then x
 		        as | None   | then Sys.panic msg
 			end
     }
 
-	type Point = {
+	Point = type {
 		x : num
 	    y : num
 	}
 
-	type Option[?T] = | Some ?T, None |
+	Option[?T] = type | Some ?T, None |
 
     extend Option[?T] :: Fallible[?T] = {
 		extract self = self
 	}
 
-	type Result[?T, ?E] = | Ok ?T, Err ?E |
+	Result[?T ?E] = type | Ok ?T, Err ?E |
 
 	extend Result[?T, ?E] :: Fallible[?T] = {
 	    extract self =
@@ -50,20 +52,23 @@ Main = {
 				
 	}
   
-	safe_slope p1 p2: Point -> Point -> Option[num] = 
-        let denominator = p2.x - p1.x in
-		if denominator == 0 then None else
-		let numerator = p2.y - p1.x in 
-		numerator / denominator
-    
+	safe_slope: Point -> Point -> Option[num] = fn p1 p2 => {
+        denominator = p2.x - p1.x
+		return match denominator 
+        	as 0 then None 
+        	as _ then {
+				numerator = p2.y - p1.x
+				return numerator / denominator
+        }
+    }
   
-	main: num = 
-		let p1 = {x = 3, y = 4} in
-		let p2 = {x = 3, y = 6} in
-		let random = {data = p2, extra = unit} in
-		(safe_slope p1 random.data) :: unwrap_or 3
-}
-
+	main: num = {
+		p1 = {x = 3, y = 4}
+		p2 = {x = 3, y = 6}
+		random = {data = p2, extra = unit}
+        return (safe_slope p1 random.data) :: unwrap_or 3
+    } 
+ }
 ---
 
 (source_file
