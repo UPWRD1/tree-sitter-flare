@@ -89,7 +89,7 @@
     "type": "arrow_type",
     "named": true,
     "fields": {
-      "parameter": {
+      "left": {
         "multiple": false,
         "required": true,
         "types": [
@@ -99,7 +99,7 @@
           }
         ]
       },
-      "return": {
+      "right": {
         "multiple": false,
         "required": true,
         "types": [
@@ -406,7 +406,7 @@
     "type": "extend_macro",
     "named": true,
     "fields": {
-      "implementor": {
+      "left": {
         "multiple": false,
         "required": true,
         "types": [
@@ -416,7 +416,7 @@
           }
         ]
       },
-      "spec": {
+      "right": {
         "multiple": false,
         "required": false,
         "types": [
@@ -1164,7 +1164,7 @@
     "type": "pattern_variant",
     "named": true,
     "fields": {
-      "variant_name": {
+      "name": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1221,7 +1221,7 @@
     "type": "prop_access",
     "named": true,
     "fields": {
-      "callee": {
+      "expr": {
         "multiple": false,
         "required": true,
         "types": [
@@ -1571,22 +1571,22 @@
     "type": "sum_type",
     "named": true,
     "fields": {
-      "data": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "_type",
-            "named": true
-          }
-        ]
-      },
       "name": {
         "multiple": true,
         "required": false,
         "types": [
           {
             "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "type": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "_type",
             "named": true
           }
         ]

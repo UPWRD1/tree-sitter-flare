@@ -141,7 +141,7 @@
         },
         {
           "type": "FIELD",
-          "name": "implementor",
+          "name": "left",
           "content": {
             "type": "SYMBOL",
             "name": "_type"
@@ -159,7 +159,7 @@
                 },
                 {
                   "type": "FIELD",
-                  "name": "spec",
+                  "name": "right",
                   "content": {
                     "type": "SYMBOL",
                     "name": "user_type"
@@ -489,7 +489,7 @@
         "members": [
           {
             "type": "FIELD",
-            "name": "parameter",
+            "name": "left",
             "content": {
               "type": "SYMBOL",
               "name": "_type"
@@ -501,7 +501,7 @@
           },
           {
             "type": "FIELD",
-            "name": "return",
+            "name": "right",
             "content": {
               "type": "SYMBOL",
               "name": "_type"
@@ -738,7 +738,7 @@
                           },
                           {
                             "type": "FIELD",
-                            "name": "data",
+                            "name": "type",
                             "content": {
                               "type": "CHOICE",
                               "members": [
@@ -776,7 +776,7 @@
                                 },
                                 {
                                   "type": "FIELD",
-                                  "name": "data",
+                                  "name": "type",
                                   "content": {
                                     "type": "CHOICE",
                                     "members": [
@@ -833,7 +833,7 @@
                           },
                           {
                             "type": "FIELD",
-                            "name": "data",
+                            "name": "type",
                             "content": {
                               "type": "CHOICE",
                               "members": [
@@ -871,7 +871,7 @@
                                 },
                                 {
                                   "type": "FIELD",
-                                  "name": "data",
+                                  "name": "type",
                                   "content": {
                                     "type": "CHOICE",
                                     "members": [
@@ -1961,7 +1961,7 @@
         "members": [
           {
             "type": "FIELD",
-            "name": "callee",
+            "name": "expr",
             "content": {
               "type": "SYMBOL",
               "name": "_atom"
@@ -2230,7 +2230,7 @@
           },
           {
             "type": "FIELD",
-            "name": "variant_name",
+            "name": "name",
             "content": {
               "type": "SYMBOL",
               "name": "identifier"

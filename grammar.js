@@ -52,10 +52,6 @@ export default grammar({
     $.macro_invoke,
   ],
 
-  // conflicts: $ => [
-  //   [$._expression],
-  // ],
-
   rules: {
     source_file: $ => newlineSep($.field_assignment),
 
@@ -76,11 +72,11 @@ export default grammar({
 
     extend_macro: $ => seq(
       'extend',
-      field('implementor', $._type),
+      field('left', $._type),
       optional(
         seq(
           '::',
-          field('spec', $.user_type),
+          field('right', $.user_type),
         )
       ),
       '=',
@@ -133,9 +129,9 @@ export default grammar({
     ),
 
     arrow_type: $ => prec.right(PREC.type_arrow, seq(
-      field('parameter', $._type),
+      field('left', $._type),
       '->',
-      field('return', $._type)
+      field('right', $._type)
     )),
 
     product_type: $ => prec.right(seq(
@@ -153,7 +149,7 @@ export default grammar({
       flareSep(
         seq(
           field("name", $.identifier),
-          field("data", optional($._type))
+          field("type", optional($._type))
         )
       ),
       '|'
@@ -313,7 +309,7 @@ export default grammar({
     ),
 
     prop_access: $ => prec.left(PREC.property, seq(
-      field('callee', $._atom),
+      field('expr', $._atom),
       choice('::', $.prop_qualifier),
       field('name', $.identifier),
     )),
@@ -367,7 +363,7 @@ export default grammar({
 
     pattern_variant: $ => prec.right(seq(
       '|',
-      field('variant_name', $.identifier),
+      field('name', $.identifier),
       optional($.pattern),
       '|'
     )),
