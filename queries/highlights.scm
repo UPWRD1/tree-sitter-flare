@@ -86,6 +86,8 @@
   (identifier) @type.enum.variant)
 
 ; Field access and assignments
+(field_assignment
+  name: (identifier) @property)
 
 (field_assignment
   name: (identifier) @function
@@ -96,9 +98,6 @@
   name: (identifier) @type
   expr: (type_expression)
 )
-
-(field_assignment
-  name: (identifier) @property)
 
 (field_access
   field: (identifier) @property)

@@ -25,7 +25,6 @@ export default grammar({
   extras: $ => [
     $.line_join,
     /\s/,
-    // / \t\r/,
     $.comment,
   ],
 
