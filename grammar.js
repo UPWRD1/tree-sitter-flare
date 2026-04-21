@@ -262,8 +262,8 @@ export default grammar({
 
     sum_constructor: $ => prec.right(seq(
       '|',
-      $.identifier,
-      optional($._expression),
+      field('name', $.identifier),
+      field('expr', optional($._expression)),
       '|'
     )),
 
