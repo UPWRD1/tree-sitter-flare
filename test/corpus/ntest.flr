@@ -30,7 +30,7 @@ Main = {
 			end
     }
     
-	Point = type {
+	pub Point = type {
 		x : num
 	    y : num
 	}

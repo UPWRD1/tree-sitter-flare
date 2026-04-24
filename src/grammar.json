@@ -927,10 +927,6 @@
         },
         {
           "type": "SYMBOL",
-          "name": "pub_expression"
-        },
-        {
-          "type": "SYMBOL",
           "name": "extern_expression"
         },
         {
@@ -1405,6 +1401,22 @@
     "field_assignment": {
       "type": "SEQ",
       "members": [
+        {
+          "type": "FIELD",
+          "name": "is_pub",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "pub"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
         {
           "type": "FIELD",
           "name": "name",

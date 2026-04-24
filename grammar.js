@@ -156,7 +156,6 @@ export default grammar({
 
     _mod_expr: $ => choice(
       $.type_expression,
-      $.pub_expression,
       $.extern_expression,
       $._expression,
     ),
@@ -246,6 +245,7 @@ export default grammar({
     ),
 
     field_assignment: $ => seq(
+      field('is_pub', optional('pub')),
       field('name', $.identifier),
       optional(field('generics', $.generic_brackets)),
       optional(
