@@ -23,6 +23,7 @@ export default grammar({
   reserved: {
     global: _ => [
       'as',
+      'all',
       'end',
       'extend',
       'extern',
@@ -95,6 +96,7 @@ export default grammar({
       $.product_type,
       $.sum_type,
       $.via,
+      $.forall,
     ),
 
     _type_atom: $ => choice(
@@ -106,6 +108,13 @@ export default grammar({
     via: $ => seq(
       'via',
       $._expression,
+    ),
+
+    forall: $ => seq(
+      'all',
+      repeat1(field('arg', $.identifier)),
+      '=>',
+      field('expr', $._type)
     ),
 
     type_app: $ => prec.left(PREC.call, seq(

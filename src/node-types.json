@@ -8,6 +8,10 @@
         "named": true
       },
       {
+        "type": "forall",
+        "named": true
+      },
+      {
         "type": "grouped_type",
         "named": true
       },
@@ -713,6 +717,32 @@
         "types": [
           {
             "type": "macro_invoke",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "forall",
+    "named": true,
+    "fields": {
+      "arg": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "expr": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "_type",
             "named": true
           }
         ]
@@ -1755,6 +1785,10 @@
   },
   {
     "type": "@",
+    "named": false
+  },
+  {
+    "type": "all",
     "named": false
   },
   {

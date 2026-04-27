@@ -3,6 +3,7 @@
 ; Keywords
 [
   "as"
+  "all"
   "end"
   "extend"
   "extern"
@@ -14,6 +15,7 @@
   "then"
   "type"
   "use"
+  "via"
 ] @keyword
 
 ; Primitive types
@@ -54,7 +56,7 @@
 (number) @constant
 (string) @string
 (boolean) @constant.builtin
-(unit_expr) @constant.builtin
+(unit_expr) @type.builtin
 
 ; Comments
 (comment) @comment
@@ -69,6 +71,8 @@
   name:(identifier) @property
   type:(_type) @type
 )
+
+(primitive_type) @type.builtin
 
 (sum_type
   name: (identifier) @type.enum.variant)
