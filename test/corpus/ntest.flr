@@ -6,24 +6,24 @@ Complicated example
 Main = {
 	use Sys
 
-	Fallible[?T] = type {
-		extract: self -> Option[?T]
+	Fallible T = type {
+		extract: self -> Option T
     }
     
-    extend Fallible[?T] = {
-        unwrap: self -> ?T = fn i =>
+    extend Fallible T = {
+        unwrap: self -> T = fn i =>
 		    match i :: extract 
 			    as | Some x | then x
 		        as | None   | then Sys.panic "unwrap failed"
 			end
 
-	    unwrap_or: self -> ?T -> ?T = fn i alternative =>
+	    unwrap_or: self -> T -> T = fn i alternative =>
 		    match i :: extract
 			    as | Some x | then x
 		        as | None   | then alternative
 			end
 
-	    expect: self -> str -> ?T = fn i alternative =>
+	    expect: self -> str -> T = fn i alternative =>
 		    match i :: extract
 		        as | Some x | then x
 		        as | None   | then Sys.panic msg
@@ -35,15 +35,15 @@ Main = {
 	    y : num
 	}
 
-	Option[?T] = type | Some ?T, None |
-
-    extend Option[?T] :: Fallible[?T] = {
+	Option T = type | Some T, None|,
+    
+    extend Option T :: Fallible T = {
 		extract self = self
 	}
 
-	Result[?T, ?E] = type | Ok ?T, Err ?E |
+	Result T E = type | Ok T, Err E |
 
-	extend Result[?T, ?E] :: Fallible[?T] = {
+	extend Result T E :: (Fallible T) = {
 	    extract self =
 			match self
 				as | Ok x  | then Some x
@@ -51,7 +51,7 @@ Main = {
 			end
 	}
   
-	safe_slope: Point -> Point -> Option[num] = fn p1 p2 => {
+	safe_slope: Point -> Point -> Option num = fn p1 p2 => {
         denominator = p2.x - p1.x
 		return match denominator 
         	as 0 then None 
@@ -80,44 +80,40 @@ Main = {
           (identifier)))
       (field_assignment
         (identifier)
-        (generic_brackets
-          (generic_type
-            (identifier)))
+        (identifier)
         (type_expression
           (product_type
             (identifier)
             (arrow_type
               (self_type)
-              (user_type
+              (type_app
                 (identifier)
-                (generic_brackets
-                  (generic_type
-                    (identifier))))))))
+                (identifier))))))
       (extend_macro
-        (user_type
+        (type_app
           (identifier)
-          (generic_brackets
-            (generic_type
-              (identifier))))
+          (identifier))
         (field_assignment
           (identifier)
           (arrow_type
             (self_type)
-            (generic_type
-              (identifier)))
+            (identifier))
           (lambda
             (identifier)
             (match_expression
               (prop_access
                 (identifier)
                 (identifier))
-              (pattern_variant
-                (identifier)
-                (pattern_variable
-                  (identifier)))
+              (pattern_atom
+                (pattern_variant
+                  (identifier)
+                  (pattern_atom
+                    (pattern_variable
+                      (identifier)))))
               (identifier)
-              (pattern_variant
-                (identifier))
+              (pattern_atom
+                (pattern_variant
+                  (identifier)))
               (call_expression
                 (field_access
                   (identifier)
@@ -128,10 +124,8 @@ Main = {
           (arrow_type
             (self_type)
             (arrow_type
-              (generic_type
-                (identifier))
-              (generic_type
-                (identifier))))
+              (identifier)
+              (identifier)))
           (lambda
             (identifier)
             (identifier)
@@ -139,13 +133,16 @@ Main = {
               (prop_access
                 (identifier)
                 (identifier))
-              (pattern_variant
-                (identifier)
-                (pattern_variable
-                  (identifier)))
+              (pattern_atom
+                (pattern_variant
+                  (identifier)
+                  (pattern_atom
+                    (pattern_variable
+                      (identifier)))))
               (identifier)
-              (pattern_variant
-                (identifier))
+              (pattern_atom
+                (pattern_variant
+                  (identifier)))
               (identifier))))
         (field_assignment
           (identifier)
@@ -153,8 +150,7 @@ Main = {
             (self_type)
             (arrow_type
               (primitive_type)
-              (generic_type
-                (identifier))))
+              (identifier)))
           (lambda
             (identifier)
             (identifier)
@@ -162,13 +158,16 @@ Main = {
               (prop_access
                 (identifier)
                 (identifier))
-              (pattern_variant
-                (identifier)
-                (pattern_variable
-                  (identifier)))
+              (pattern_atom
+                (pattern_variant
+                  (identifier)
+                  (pattern_atom
+                    (pattern_variable
+                      (identifier)))))
               (identifier)
-              (pattern_variant
-                (identifier))
+              (pattern_atom
+                (pattern_variant
+                  (identifier)))
               (call_expression
                 (field_access
                   (identifier)
@@ -184,87 +183,73 @@ Main = {
             (primitive_type))))
       (field_assignment
         (identifier)
-        (generic_brackets
-          (generic_type
-            (identifier)))
+        (identifier)
         (type_expression
           (sum_type
             (identifier)
-            (generic_type
-              (identifier))
+            (identifier)
             (identifier))))
       (extend_macro
-        (user_type
+        (type_app
           (identifier)
-          (generic_brackets
-            (generic_type
-              (identifier))))
-        (user_type
+          (identifier))
+        (type_app
           (identifier)
-          (generic_brackets
-            (generic_type
-              (identifier))))
+          (identifier))
         (field_assignment
           (identifier)
           (identifier)
           (identifier)))
       (field_assignment
         (identifier)
-        (generic_brackets
-          (generic_type
-            (identifier))
-          (generic_type
-            (identifier)))
+        (identifier)
+        (identifier)
         (type_expression
           (sum_type
             (identifier)
-            (generic_type
-              (identifier))
             (identifier)
-            (generic_type
-              (identifier)))))
+            (identifier)
+            (identifier))))
       (extend_macro
-        (user_type
-          (identifier)
-          (generic_brackets
-            (generic_type
-              (identifier))
-            (generic_type
-              (identifier))))
-        (user_type
-          (identifier)
-          (generic_brackets
-            (generic_type
-              (identifier))))
+        (type_app
+          (type_app
+            (identifier)
+            (identifier))
+          (identifier))
+        (grouped_type
+          (type_app
+            (identifier)
+            (identifier)))
         (field_assignment
           (identifier)
           (identifier)
           (match_expression
             (identifier)
-            (pattern_variant
-              (identifier)
-              (pattern_variable
-                (identifier)))
+            (pattern_atom
+              (pattern_variant
+                (identifier)
+                (pattern_atom
+                  (pattern_variable
+                    (identifier)))))
             (call_expression
               (identifier)
               (identifier))
-            (pattern_variant
-              (identifier)
-              (pattern_variable
-                (identifier)))
+            (pattern_atom
+              (pattern_variant
+                (identifier)
+                (pattern_atom
+                  (pattern_variable
+                    (identifier)))))
             (identifier))))
       (field_assignment
         (identifier)
         (arrow_type
-          (user_type
-            (identifier))
+          (identifier)
           (arrow_type
-            (user_type
-              (identifier))
-            (user_type
+            (identifier)
+            (type_app
               (identifier)
-              (generic_brackets
-                (primitive_type)))))
+              (primitive_type))))
         (lambda
           (identifier)
           (identifier)
@@ -284,8 +269,9 @@ Main = {
                 (pattern_atom
                   (number))
                 (identifier)
-                (pattern_variable
-                  (identifier))
+                (pattern_atom
+                  (pattern_variable
+                    (identifier)))
                 (fielded_constructor
                   (field_assignment
                     (identifier)

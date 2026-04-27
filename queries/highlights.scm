@@ -8,6 +8,7 @@
   "extern"
   "fn"
   "match"
+  "or"
   "pub"
   "return"
   "then"
@@ -20,7 +21,6 @@
   "num"
   "str"
   "bool"
-  "unit"
 ] @type.builtin
 
 ; Operators
@@ -42,8 +42,6 @@
   ")"
   "{"
   "}"
-  "["
-  "]"
   "|"
 ] @punctuation.bracket
 
@@ -52,7 +50,6 @@
   ":"
 ] @punctuation.delimiter
 
-; "?" @type.parameter
 ; Literals
 (number) @constant
 (string) @string
@@ -65,11 +62,6 @@
 ; Lambda parameters
 (lambda
   arg: (identifier) @variable.parameter)
-
-(user_type
-  (identifier) @type)
-
-(generic_type) @type.parameter
 
 (arrow_type) @type
 
@@ -86,8 +78,6 @@
   (identifier) @type.enum.variant)
 
 ; Field access and assignments
-(field_assignment
-  name: (identifier) @property)
 
 (field_assignment
   name: (identifier) @function
@@ -98,6 +88,9 @@
   name: (identifier) @type
   expr: (type_expression)
 )
+
+(field_assignment
+  name: (identifier) @property)
 
 (field_access
   field: (identifier) @property)
