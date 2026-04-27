@@ -6,6 +6,6 @@ Test = {}
 ---
 
 (source_file
-  (field_assignment
+  assignment: (field_assignment
     name: (identifier)
     expr: (fielded_constructor)))

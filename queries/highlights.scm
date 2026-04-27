@@ -3,16 +3,19 @@
 ; Keywords
 [
   "as"
+  "all"
   "end"
   "extend"
   "extern"
   "fn"
   "match"
+  "or"
   "pub"
   "return"
   "then"
   "type"
   "use"
+  "via"
 ] @keyword
 
 ; Primitive types
@@ -20,7 +23,6 @@
   "num"
   "str"
   "bool"
-  "unit"
 ] @type.builtin
 
 ; Operators
@@ -42,8 +44,6 @@
   ")"
   "{"
   "}"
-  "["
-  "]"
   "|"
 ] @punctuation.bracket
 
@@ -52,12 +52,11 @@
   ":"
 ] @punctuation.delimiter
 
-; "?" @type.parameter
 ; Literals
 (number) @constant
 (string) @string
 (boolean) @constant.builtin
-(unit_expr) @constant.builtin
+(unit_expr) @type.builtin
 
 ; Comments
 (comment) @comment
@@ -66,17 +65,14 @@
 (lambda
   arg: (identifier) @variable.parameter)
 
-(user_type
-  (identifier) @type)
-
-(generic_type) @type.parameter
-
 (arrow_type) @type
 
 (product_type
   name:(identifier) @property
   type:(_type) @type
 )
+
+(primitive_type) @type.builtin
 
 (sum_type
   name: (identifier) @type.enum.variant)
@@ -86,8 +82,6 @@
   (identifier) @type.enum.variant)
 
 ; Field access and assignments
-(field_assignment
-  name: (identifier) @property)
 
 (field_assignment
   name: (identifier) @function
@@ -98,6 +92,9 @@
   name: (identifier) @type
   expr: (type_expression)
 )
+
+(field_assignment
+  name: (identifier) @property)
 
 (field_access
   field: (identifier) @property)

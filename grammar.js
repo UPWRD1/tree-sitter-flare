@@ -1,10 +1,4 @@
 const PREC = {
-  // this resolves a conflict between the usage of ':' in a lambda vs in a
-  // typed parameter. In the case of a lambda, we don't allow typed parameters.
-  lambda: -2,
-  // typed_parameter: -1,
-  // conditional: -1,
-
   parenthesized_expression: 1,
 
   type_arrow: 9,
@@ -15,8 +9,6 @@ const PREC = {
   property: 22,
   call: 23,
   access: 24,
-
-  macro: 100,
 };
 
 export default grammar({
@@ -31,15 +23,19 @@ export default grammar({
   reserved: {
     global: _ => [
       'as',
+      'all',
       'end',
+      'extend',
       'extern',
       'fn',
       'match',
       'pub',
+      'or',
       'return',
       'then',
       'type',
       'use',
+      'via',
     ],
   },
   word: $ => $.identifier,
@@ -52,7 +48,10 @@ export default grammar({
   ],
 
   rules: {
-    source_file: $ => newlineSep($.field_assignment),
+    source_file: $ => flareSep(choice(
+      field('macro', $.macro_invoke),
+      field('assignment', $.field_assignment),
+    )),
 
     line_join: _ => token(seq('\\', choice(seq(optional('\r'), '\n'), '\0'))),
 
@@ -64,10 +63,10 @@ export default grammar({
       $.return_macro,
     ),
 
-    use_macro: $ => prec(PREC.macro, seq(
+    use_macro: $ => seq(
       'use',
       field('import', $._pattern_path_or_var),
-    )),
+    ),
 
     extend_macro: $ => seq(
       'extend',
@@ -75,7 +74,7 @@ export default grammar({
       optional(
         seq(
           '::',
-          field('right', $.user_type),
+          field('right', $._type),
         )
       ),
       '=',
@@ -90,42 +89,48 @@ export default grammar({
     ),
 
     _type: $ => choice(
-      $.primitive_type,
-      $.self_type,
-      $.user_type,
-      $.generic_type,
+      $._type_atom,
       $.arrow_type,
+      $.type_app,
+      $.self_type,
       $.product_type,
       $.sum_type,
-      $.grouped_type,
+      $.via,
+      $.forall,
     ),
+
+    _type_atom: $ => choice(
+      $.primitive_type,
+      $.grouped_type,
+      $.identifier,
+    ),
+
+    via: $ => seq(
+      'via',
+      $._expression,
+    ),
+
+    forall: $ => seq(
+      'all',
+      repeat1(field('arg', $.identifier)),
+      '=>',
+      field('expr', $._type)
+    ),
+
+    type_app: $ => prec.left(PREC.call, seq(
+      $._type,
+      $._type_atom,
+    )),
 
     grouped_type: $ => seq('(', $._type, ')'),
 
-    primitive_type: _ => choice(
+    primitive_type: $ => choice(
       'num',
       'str',
       'bool',
-      'unit'
     ),
 
     self_type: _ => 'self',
-
-    user_type: $ => seq(
-      field('name', $.identifier),
-      optional($.generic_brackets),
-    ),
-
-    generic_brackets: $ => seq(
-      '[',
-      field('generics', commaSep($._type)),
-      ']'
-    ),
-
-    generic_type: $ => seq(
-      field('sigil', '?'),
-      field('name', $.identifier)
-    ),
 
     arrow_type: $ => prec.right(PREC.type_arrow, seq(
       field('left', $._type),
@@ -133,7 +138,7 @@ export default grammar({
       field('right', $._type)
     )),
 
-    product_type: $ => prec.right(seq(
+    product_type: $ => seq(
       '{',
       flareSep(seq(
         field("name", $.identifier),
@@ -141,7 +146,7 @@ export default grammar({
         field("type", $._type)
       )),
       '}'
-    )),
+    ),
 
     sum_type: $ => prec.right(seq(
       '|',
@@ -155,18 +160,19 @@ export default grammar({
     )),
 
     _mod_expr: $ => choice(
-      $.type_expression,
       $.extern_expression,
       $._expression,
     ),
 
     _expression: $ => choice(
+      $.type_expression,
       $.match_expression,
       $.lambda,
       $.prop_access,
       $.binary_expression,
       $._atom,
       $.call_expression,
+      $.sum_constructor,
     ),
 
     _atom: $ => choice(
@@ -176,18 +182,13 @@ export default grammar({
       $.boolean,
       $.parenthesized_expression,
       $.fielded_constructor,
-      $.sum_constructor,
       $.field_access,
       $.identifier,
     ),
 
     number: _ => /\d+(\.\d+)?/,
 
-    string: _ => seq(
-      '"',
-      /[^"]*/,
-      '"'
-    ),
+    string: _ => seq('"', repeat(choice(/[^"\\]/, /\\./)), '"'),
 
     unit_expr: _ => 'unit',
 
@@ -205,11 +206,6 @@ export default grammar({
     type_expression: $ => seq(
       'type',
       $._type
-    ),
-
-    pub_expression: $ => seq(
-      'pub',
-      $._mod_expr,
     ),
 
     extern_expression: $ => seq(
@@ -247,7 +243,6 @@ export default grammar({
     field_assignment: $ => seq(
       field('is_pub', optional('pub')),
       field('name', $.identifier),
-      optional(field('generics', $.generic_brackets)),
       optional(
         field('arg', repeat1($.identifier)),
       ),
@@ -320,13 +315,17 @@ export default grammar({
     ),
 
     pattern: $ => choice(
-      $.pattern_path,
-      $.pattern_product,
-      $.pattern_variant,
-      $.pattern_variable,
       $.pattern_alias,
-      $.pattern_atom
+      $.pattern_atom,
+      $.pattern_or,
     ),
+
+    pattern_or: $ => seq(
+      $.pattern_atom,
+      'or',
+      $.pattern
+    ),
+
 
     _pattern_terminal: $ => choice(
       $.pattern_variable,
@@ -351,11 +350,11 @@ export default grammar({
     ),
 
     _pattern_product_elem: $ => seq(
-      $.pattern,
+      $.pattern_atom,
     ),
 
     pattern_alias: $ => seq(
-      $.pattern,
+      $.pattern_atom,
       '@',
       $.identifier,
     ),
@@ -363,32 +362,32 @@ export default grammar({
     pattern_variant: $ => prec.right(seq(
       '|',
       field('name', $.identifier),
-      optional($.pattern),
+      optional($.pattern_atom),
       '|'
     )),
 
     pattern_variable: $ => $.identifier,
 
     pattern_atom: $ => choice(
+      $.pattern_path,
+      $.pattern_product,
+      $.pattern_variant,
+      $.pattern_variable,
       $.number,
       $.string,
+      $.grouped_pattern,
     ),
+
+    grouped_pattern: $ => seq(
+      '(',
+      $.pattern,
+      ')'
+    )
   }
 });
 
 function flareSep(rule) {
-  return choice(
-    commaSep(rule),
-    newlineSep(rule),
-  );
-}
-
-function commaSep(rule) {
-  return optional(seq(
-    rule,
-    repeat(seq(',', rule)),
-    optional(',')
-  ));
+  return sep_by(rule, choice(',', '\n'));
 }
 
 function sep_by(rule, separator) {
@@ -401,12 +400,4 @@ function sep_by(rule, separator) {
 
 function forward_sep_by(rule, separator) {
   return repeat1(seq(separator, rule));
-}
-
-function newlineSep(rule) {
-  return optional(seq(
-    rule,
-    repeat(seq('\n', rule)),
-    optional('\n')
-  ));
 }

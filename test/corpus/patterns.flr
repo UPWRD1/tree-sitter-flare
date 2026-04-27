@@ -12,6 +12,7 @@ Test = {
         new_point = PointXY :: new { x = a, b = y}
         return new_point
     }
+
     matching = {
         opt = Option :: Some product_expansion 
         return match opt

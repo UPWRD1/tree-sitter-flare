@@ -2,7 +2,7 @@
 Generics
 ==================
 Module = {
-    Result[?T, ?E] = type |Ok ?T, Err ?T|
+    Result T E = type | Ok T, Err T |
 }
 ---
 
@@ -12,16 +12,11 @@ Module = {
     (fielded_constructor
       (field_assignment
         (identifier)
-        (generic_brackets
-          (generic_type
-            (identifier))
-          (generic_type
-            (identifier)))
+        (identifier)
+        (identifier)
         (type_expression
           (sum_type
             (identifier)
-            (generic_type
-              (identifier))
             (identifier)
-            (generic_type
-              (identifier))))))))
+            (identifier)
+            (identifier)))))))
