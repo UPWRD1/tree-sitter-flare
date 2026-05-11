@@ -1,4 +1,5 @@
 const PREC = {
+  pattern: -1,
   parenthesized_expression: 1,
 
   type_arrow: 9,
@@ -65,7 +66,7 @@ export default grammar({
 
     use_macro: $ => seq(
       'use',
-      field('import', $._pattern_path_or_var),
+      field('import', $.pattern),
     ),
 
     extend_macro: $ => seq(
@@ -236,6 +237,7 @@ export default grammar({
       flareSep(choice(
         field('macro', $.macro_invoke),
         field('assignment', $.field_assignment),
+        field('inherit', $.identifier),
       )),
       '}'
     ),
@@ -290,10 +292,7 @@ export default grammar({
     field_access: $ => prec.left(PREC.access, seq(
       field('expr', $._atom),
       '.',
-      choice(
-        field('field', $.identifier),
-        $.pattern_product
-      )
+      field('field', $.pattern),
     )),
 
     prop_qualifier: $ => seq(
@@ -314,75 +313,34 @@ export default grammar({
       ')'
     ),
 
-    pattern: $ => choice(
+    pattern: $ => prec.right(choice(
       $.pattern_alias,
-      $.pattern_atom,
       $.pattern_or,
-    ),
-
-    pattern_or: $ => seq(
-      $.pattern_atom,
-      'or',
-      $.pattern
-    ),
-
-
-    _pattern_terminal: $ => choice(
-      $.pattern_variable,
-      $.pattern_product,
-    ),
-
-    _pattern_path_or_var: $ => choice(
-      $.pattern_path,
-      $.pattern_variable,
-    ),
-
-    pattern_path: $ => prec.left(PREC.access, seq(
-      $.pattern,
-      '.',
-      $._pattern_terminal,
+      $._pattern_expression,
     )),
 
-    pattern_product: $ => seq(
-      '{',
-      flareSep($._pattern_product_elem),
-      '}'
-    ),
-
-    _pattern_product_elem: $ => seq(
-      $.pattern_atom,
-    ),
+    pattern_or: $ => prec.right(seq(
+      $._pattern_expression,
+      'or',
+      $.pattern
+    )),
 
     pattern_alias: $ => seq(
-      $.pattern_atom,
+      $.pattern,
       '@',
       $.identifier,
     ),
 
-    pattern_variant: $ => prec.right(seq(
-      '|',
-      field('name', $.identifier),
-      optional($.pattern_atom),
-      '|'
-    )),
-
-    pattern_variable: $ => $.identifier,
-
-    pattern_atom: $ => choice(
-      $.pattern_path,
-      $.pattern_product,
-      $.pattern_variant,
-      $.pattern_variable,
-      $.number,
-      $.string,
-      $.grouped_pattern,
-    ),
-
-    grouped_pattern: $ => seq(
-      '(',
-      $.pattern,
-      ')'
-    )
+    _pattern_expression: $ =>prec(PREC.pattern, choice(
+        $.identifier,
+        $.number,
+        $.string,
+        $.boolean,
+        $.parenthesized_expression,
+        $.fielded_constructor,
+        $.sum_constructor,
+        $.field_access,
+      ))
   }
 });
 
