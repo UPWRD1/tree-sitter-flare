@@ -10,6 +10,7 @@ const PREC = {
   property: 22,
   call: 23,
   access: 24,
+  match: 25,
 };
 
 export default grammar({
@@ -25,15 +26,13 @@ export default grammar({
     global: _ => [
       'as',
       'all',
-      'end',
       'extend',
       'extern',
       'fn',
-      'match',
+      // 'match',
       'pub',
       'or',
-      'return',
-      'then',
+      // 'return',
       'type',
       'use',
       'via',
@@ -60,13 +59,21 @@ export default grammar({
 
     macro_invoke: $ => choice(
       $.use_macro,
+      $.type_macro,
       $.extend_macro,
-      $.return_macro,
+      // $.return_macro,
     ),
 
     use_macro: $ => seq(
       'use',
       field('import', $.pattern),
+    ),
+
+    type_macro: $ => seq(
+      'type',
+      field('name', $.pattern),
+      ':',
+      field('type', $._type),
     ),
 
     extend_macro: $ => seq(
@@ -84,10 +91,10 @@ export default grammar({
       '}',
     ),
 
-    return_macro: $ => seq(
-      'return',
-      $._mod_expr,
-    ),
+    // return_macro: $ => seq(
+    //   'return',
+    //   $._mod_expr,
+    // ),
 
     _type: $ => choice(
       $._type_atom,
@@ -166,8 +173,6 @@ export default grammar({
     ),
 
     _expression: $ => choice(
-      $.type_expression,
-      $.match_expression,
       $.lambda,
       $.prop_access,
       $.binary_expression,
@@ -214,17 +219,6 @@ export default grammar({
       $._mod_expr,
     ),
 
-    match_expression: $ => seq(
-      'match',
-      field('value', $._expression),
-      forward_sep_by(seq(
-        field('pattern', $.pattern),
-        'then',
-        field('expr', $._expression),
-      ), 'as',),
-      'end'
-    ),
-
     lambda: $ => prec.right(seq(
       'fn',
       repeat1(field('arg', $.identifier)),
@@ -244,10 +238,7 @@ export default grammar({
 
     field_assignment: $ => seq(
       field('is_pub', optional('pub')),
-      field('name', $.identifier),
-      optional(
-        field('arg', repeat1($.identifier)),
-      ),
+      field('pat', $.pattern),
       optional(seq(
         ':',
         field('type', $._type),
@@ -265,6 +256,7 @@ export default grammar({
 
     binary_expression: $ => choice(
       ...[
+        ['as', PREC.match],
         ['*', PREC.mul],
         ['/', PREC.mul],
         ['+', PREC.add],
@@ -314,13 +306,20 @@ export default grammar({
     ),
 
     pattern: $ => prec.right(choice(
+      $.pattern_func,
       $.pattern_alias,
       $.pattern_or,
-      $._pattern_expression,
+      $._atom,
     )),
 
+    pattern_func: $ => prec.right(PREC.pattern, seq(
+      field('name', $.identifier),
+      field('arg', repeat1($.identifier)),
+    ),
+    ),
+
     pattern_or: $ => prec.right(seq(
-      $._pattern_expression,
+      $._atom,
       'or',
       $.pattern
     )),
@@ -330,17 +329,7 @@ export default grammar({
       '@',
       $.identifier,
     ),
-
-    _pattern_expression: $ =>prec(PREC.pattern, choice(
-        $.identifier,
-        $.number,
-        $.string,
-        $.boolean,
-        $.parenthesized_expression,
-        $.fielded_constructor,
-        $.sum_constructor,
-        $.field_access,
-      ))
+   
   }
 });
 
